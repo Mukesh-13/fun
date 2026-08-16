@@ -1,0 +1,14 @@
+{
+  "name": "pulsecloud-app",
+  "version": "1.0.0",
+  "description": "High-speed cloud workspace and audio prank experience",
+  "main": "index.html",
+  "scripts": {
+    "dev": "npx -y serve . -l 3000",
+    "start": "npx -y serve . -l 3000",
+    "serve": "npx -y serve . -l 3000"
+  },
+  "keywords": ["web", "audio", "prank", "cloud"],
+  "author": "",
+  "license": "MIT"
+}

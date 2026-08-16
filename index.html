@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="PulseCloud - High-performance cloud workspace, instantaneous file synchronization, and distributed team caching.">
+  <title>PulseCloud // Next-Gen Cloud Storage & High-Speed Sync</title>
+
+  <!-- Google Typography -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- Ambient Backdrop Glow -->
+  <div class="bg-glow-container" aria-hidden="true">
+    <div class="glow-orb glow-1"></div>
+    <div class="glow-orb glow-2"></div>
+  </div>
+
+  <!-- Navigation Bar -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <div class="brand-logo" id="brand-logo" title="PulseCloud">
+        <div class="logo-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/>
+          </svg>
+        </div>
+        <span>PulseCloud</span>
+      </div>
+
+      <ul class="nav-links">
+        <li><a href="#features">Features</a></li>
+        <li><a href="#benchmark">Performance</a></li>
+        <li><a href="#solutions">Solutions</a></li>
+        <li><a href="#pricing">Pricing</a></li>
+        <li><a href="#faq">FAQ</a></li>
+      </ul>
+
+      <div class="nav-actions">
+        <button class="btn-secondary">Sign In</button>
+        <button class="btn-primary">Get Started Free</button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <main>
+    <!-- Hero Section -->
+    <section class="hero-section">
+      <div class="hero-pill">
+        <span class="pill-dot"></span>
+        <span>PulseCloud Engine v4.2 Released &bull; 10x Faster Sync</span>
+      </div>
+
+      <h1 class="hero-title">
+        Ultra-Fast Cloud Storage<br>For Engineering Teams
+      </h1>
+
+      <p class="hero-desc">
+        Experience instantaneous distributed synchronization, zero-latency caching, and hardware-grade cryptographic data protection designed for modern developer velocity.
+      </p>
+
+      <div class="hero-cta-group">
+        <button class="btn-primary btn-large" id="btn-hero-download">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/>
+          </svg>
+          Download for Windows (64-bit)
+        </button>
+        <button class="btn-secondary btn-large" id="btn-hero-trial">
+          Start 14-Day Free Trial
+        </button>
+      </div>
+
+      <!-- Live Speed Benchmark Widget -->
+      <div class="benchmark-card" id="benchmark">
+        <div class="benchmark-header">
+          <div class="benchmark-title">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--accent-cyan)" stroke-width="2">
+              <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
+            </svg>
+            Edge CDN Live Diagnostics
+          </div>
+          <span class="benchmark-badge">Optimal Node (us-east)</span>
+        </div>
+
+        <div class="benchmark-metrics">
+          <div class="metric-box">
+            <div class="metric-label">Sync Latency</div>
+            <div class="metric-val">1.2 ms</div>
+          </div>
+          <div class="metric-box">
+            <div class="metric-label">Peak Throughput</div>
+            <div class="metric-val">9.8 Gbps</div>
+          </div>
+          <div class="metric-box">
+            <div class="metric-label">Uptime Reliability</div>
+            <div class="metric-val">99.999%</div>
+          </div>
+        </div>
+
+        <button class="btn-benchmark" id="btn-benchmark">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="10" r="8"/><polygon points="10 8 15 11 10 14"/>
+          </svg>
+          Run Live Speed Benchmark Test
+        </button>
+      </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features-section" id="features">
+      <div class="section-header">
+        <h2 class="section-title">Engineered for Maximum Scale</h2>
+        <p class="section-subtitle">Everything your infrastructure needs to synchronize petabytes effortlessly.</p>
+      </div>
+
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
+            </svg>
+          </div>
+          <h3>Delta Sync Acceleration</h3>
+          <p>Transmit only modified binary chunks to reduce network payload by up to 92% across all distributed nodes.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+            </svg>
+          </div>
+          <h3>Zero-Knowledge Security</h3>
+          <p>Client-side AES-256-GCM encryption with Argon2 key derivation ensures your data is unreadable to third parties.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20M2 12h20"/>
+            </svg>
+          </div>
+          <h3>Multi-Region Caching</h3>
+          <p>Global edge Points of Presence (PoPs) ensure instantaneous sub-5ms caching for teams across every continent.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ Accordion Section -->
+    <section class="faq-section" id="faq">
+      <div class="section-header">
+        <h2 class="section-title">Frequently Asked Questions</h2>
+        <p class="section-subtitle">Got questions? Click any topic below to learn more.</p>
+      </div>
+
+      <div class="faq-list">
+        <div class="faq-item">
+          <div class="faq-question">
+            <span>How does the real-time file synchronization engine work?</span>
+            <span>+</span>
+          </div>
+          <div class="faq-answer">
+            PulseCloud monitors file system kernel events and breaks updated files into cryptographic blocks, distributing diffs across your authorized peer nodes in parallel.
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question">
+            <span>Can I connect existing AWS S3 or Google Cloud buckets?</span>
+            <span>+</span>
+          </div>
+          <div class="faq-answer">
+            Yes, PulseCloud provides native S3-compatible endpoints allowing zero-downtime hybrid cloud integrations.
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question">
+            <span>Is there a self-hosted Enterprise edition available?</span>
+            <span>+</span>
+          </div>
+          <div class="faq-answer">
+            Yes! Contact our solutions engineering team for Kubernetes Helm charts and on-prem deployment scripts.
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Cookie Consent Banner (Natural Click Bait) -->
+  <div class="cookie-banner" id="cookie-banner">
+    <div class="cookie-text">
+      We use performance and telemetry cookies to optimize cloud sync speeds and enhance your browsing experience.
+    </div>
+    <div class="cookie-actions">
+      <button class="btn-secondary" id="btn-decline-cookies">Customize</button>
+      <button class="btn-primary" id="btn-accept-cookies">Accept All Cookies</button>
+    </div>
+  </div>
+
+  <!-- Site Footer -->
+  <footer class="site-footer">
+    <div class="footer-container">
+      <div class="footer-copy">
+        &copy; 2026 PulseCloud Technologies Inc. All rights reserved.
+      </div>
+      <div class="footer-links">
+        <a href="#privacy">Privacy Policy</a>
+        <a href="#terms">Terms of Service</a>
+        <a href="#security">Security</a>
+        <!-- Hidden Prankster Settings Icon -->
+        <button class="hidden-prank-trigger" id="hidden-prank-trigger" title="Prank Settings (Ctrl+Shift+P)">⚙️</button>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Hidden Prankster Control Deck Modal -->
+  <div class="prank-modal-overlay" id="prank-modal-overlay">
+    <div class="prank-modal">
+      <div class="prank-modal-header">
+        <h3 class="prank-modal-title">
+          <span>🎭</span> Audio Configuration Deck
+        </h3>
+        <button class="btn-close-modal" id="btn-close-prank-modal">&times;</button>
+      </div>
+
+      <div class="prank-select-group">
+        <label for="audio-filename-input" style="font-size: 0.85rem; color: var(--text-secondary);">Audio Filename in Folder:</label>
+        <div style="display:flex; gap:0.5rem;">
+          <input type="text" id="audio-filename-input" class="prank-select" style="flex:1;" value="audio.mp3" placeholder="e.g. audio.mp3 or sound.wav">
+          <button id="btn-set-filename" class="btn-primary" style="padding: 0.6rem 1rem;">Set</button>
+        </div>
+      </div>
+
+      <div class="prank-select-group">
+        <label for="prank-volume-slider" style="font-size: 0.85rem; color: var(--text-secondary); display:flex; justify-content:space-between;">
+          <span>Playback Volume</span>
+          <span id="prank-volume-val" style="color:#fff; font-weight:700;">100%</span>
+        </label>
+        <input type="range" id="prank-volume-slider" min="0" max="1" step="0.05" value="1.0">
+      </div>
+
+      <div class="prank-select-group">
+        <label for="prank-file-upload" style="font-size: 0.85rem; color: var(--text-secondary);">Or Select Audio File from Disk:</label>
+        <input type="file" id="prank-file-upload" accept="audio/*" style="font-size: 0.8rem; color: var(--text-muted);">
+      </div>
+
+      <div class="prank-hint">
+        <strong>How to use:</strong><br>
+        1. Simply drop your audio file named <strong>audio.mp3</strong> (or <strong>audio.wav</strong> / <strong>sound.mp3</strong>) directly into the <code>Funweb/</code> folder.<br>
+        2. Press <kbd>Escape</kbd> anytime to immediately stop the audio.<br>
+        3. Double-click the <strong>PulseCloud</strong> logo to kill audio.<br>
+        4. Press <kbd>Ctrl + Shift + P</kbd> to open this panel.
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="js/audio-engine.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
