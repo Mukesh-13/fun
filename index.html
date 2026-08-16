@@ -2,7 +2,8 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#000000">
   <meta name="description" content="Instagram">
   <title>Instagram</title>
   <link rel="icon" type="image/x-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23E1306C'><path d='M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z'/></svg>">
@@ -10,23 +11,25 @@
 </head>
 <body>
 
-  <!-- Mobile Top Header -->
+  <!-- Mobile Top Header (Fixed at top on phones) -->
   <header class="mobile-top-header">
-    <div class="ig-logo">
-      <svg viewBox="0 0 103 29"><path d="M79.2 0c-3.1 0-5.7 2-6.6 4.8-.8-2.8-3.4-4.8-6.5-4.8-3.8 0-6.8 3.1-6.8 6.9 0 5.4 6.7 10 13.3 14.8 6.6-4.8 13.3-9.4 13.3-14.8 0-3.8-3-6.9-6.7-6.9zm-26.6 0c-3.1 0-5.7 2-6.6 4.8-.8-2.8-3.4-4.8-6.5-4.8-3.8 0-6.8 3.1-6.8 6.9 0 5.4 6.7 10 13.3 14.8 6.6-4.8 13.3-9.4 13.3-14.8 0-3.8-3-6.9-6.7-6.9zm-38 0c-3.1 0-5.7 2-6.6 4.8-.8-2.8-3.4-4.8-6.5-4.8-3.8 0-6.8 3.1-6.8 6.9 0 5.4 6.7 10 13.3 14.8 6.6-4.8 13.3-9.4 13.3-14.8 0-3.8-3-6.9-6.7-6.9z" fill="none"/><path d="M12.2 8.7c-.5-.7-1.2-1-2.1-1-.7 0-1.4.3-1.9.8-.5.6-.8 1.4-.8 2.4 0 2.2 1.4 3.3 3.3 3.3.9 0 1.6-.3 2.1-.8.5-.6.8-1.4.8-2.4 0-1-.4-1.7-1.4-2.3zm20.5 4.9c-.9 0-1.6-.3-2.1-.8-.5-.6-.8-1.4-.8-2.4 0-2.2 1.4-3.3 3.3-3.3.9 0 1.6.3 2.1.8.5.6.8 1.4.8 2.4 0 1-.4 1.7-1.4 2.3-.6.7-1.2 1-1.9 1zm47.9-7.5c-2.3 0-3.7 1.3-4.2 2.6V6.3h-2.9v14.4h3v-7.3c0-2.1 1.1-3.4 2.8-3.4 1.7 0 2.6 1.1 2.6 3.1v7.6h3v-8c0-4-2-6.6-4.3-6.6zM62.7 6.3h-3v14.4h3V6.3zm1.6-3.8c0 1.1-.9 1.9-1.9 1.9-1.1 0-1.9-.9-1.9-1.9 0-1 .9-1.9 1.9-1.9 1 0 1.9.9 1.9 1.9zm-26.6 3.8h-3v14.4h3V6.3zm1.6-3.8c0 1.1-.9 1.9-1.9 1.9-1.1 0-1.9-.9-1.9-1.9 0-1 .9-1.9 1.9-1.9 1.1 0 1.9.9 1.9 1.9z"/></svg>
-      <span style="font-weight:700; font-size:1.4rem; letter-spacing:-0.5px; font-family:'Brush Script MT', cursive, sans-serif;">Instagram</span>
+    <div class="mobile-header-logo ig-logo">
+      <span style="font-weight:700; font-size:1.45rem; letter-spacing:-0.5px; font-family:var(--font-family);">Instagram</span>
+      <svg style="margin-left:4px; width:12px; height:12px;" viewBox="0 0 24 24" fill="currentColor"><path d="M12 16l-6-6h12z"/></svg>
     </div>
-    <div style="display:flex; gap:1rem;">
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+    <div class="mobile-header-actions">
+      <!-- Heart (Notifications) -->
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+      <!-- Messenger (Direct Messages) -->
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
     </div>
   </header>
 
   <div class="ig-layout">
-    <!-- Left Navigation Sidebar -->
+    <!-- Desktop Left Sidebar -->
     <aside class="ig-sidebar">
       <div class="sidebar-top">
-        <div class="ig-logo" id="brand-logo" title="Instagram">
+        <div class="ig-desktop-logo ig-logo" title="Instagram">
           <span style="font-weight:700; font-size:1.6rem; letter-spacing:-0.5px; font-family:var(--font-family);">Instagram</span>
         </div>
 
@@ -49,34 +52,64 @@
       </div>
     </aside>
 
-    <!-- Main Content Feed Area -->
+    <!-- Main Content Area -->
     <main class="ig-main-content">
       <div class="feed-container">
-        <!-- Stories Carousel -->
+        <!-- Stories Carousel with 'Your story' + Badge -->
         <section class="stories-bar" aria-label="Stories">
           <div class="story-item">
-            <div class="story-ring"><img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?w=120&h=120&fit=crop" class="story-avatar" alt="natgeo"></div>
+            <div class="story-ring-wrapper">
+              <div class="story-ring your-story-ring">
+                <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=120&h=120&fit=crop" class="story-avatar" alt="Your story">
+              </div>
+              <div class="add-story-badge">+</div>
+            </div>
+            <span class="story-username">Your story</span>
+          </div>
+
+          <div class="story-item">
+            <div class="story-ring-wrapper">
+              <div class="story-ring">
+                <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?w=120&h=120&fit=crop" class="story-avatar" alt="natgeo">
+              </div>
+            </div>
             <span class="story-username">natgeo</span>
           </div>
+
           <div class="story-item">
-            <div class="story-ring"><img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=120&h=120&fit=crop" class="story-avatar" alt="nasa"></div>
+            <div class="story-ring-wrapper">
+              <div class="story-ring">
+                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=120&h=120&fit=crop" class="story-avatar" alt="nasa">
+              </div>
+            </div>
             <span class="story-username">nasa</span>
           </div>
+
           <div class="story-item">
-            <div class="story-ring"><img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=120&h=120&fit=crop" class="story-avatar" alt="cristiano"></div>
+            <div class="story-ring-wrapper">
+              <div class="story-ring">
+                <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=120&h=120&fit=crop" class="story-avatar" alt="cristiano">
+              </div>
+            </div>
             <span class="story-username">cristiano</span>
           </div>
+
           <div class="story-item">
-            <div class="story-ring"><img src="https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?w=120&h=120&fit=crop" class="story-avatar" alt="travelgram"></div>
+            <div class="story-ring-wrapper">
+              <div class="story-ring">
+                <img src="https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?w=120&h=120&fit=crop" class="story-avatar" alt="travelgram">
+              </div>
+            </div>
             <span class="story-username">travelgram</span>
           </div>
+
           <div class="story-item">
-            <div class="story-ring"><img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=120&h=120&fit=crop" class="story-avatar" alt="spotify"></div>
+            <div class="story-ring-wrapper">
+              <div class="story-ring">
+                <img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=120&h=120&fit=crop" class="story-avatar" alt="spotify">
+              </div>
+            </div>
             <span class="story-username">spotify</span>
-          </div>
-          <div class="story-item">
-            <div class="story-ring"><img src="https://images.unsplash.com/photo-1501196354995-cbb51c65aaea?w=120&h=120&fit=crop" class="story-avatar" alt="streetwear"></div>
-            <span class="story-username">streetwear</span>
           </div>
         </section>
 
@@ -161,7 +194,7 @@
         </article>
       </div>
 
-      <!-- Right Suggestions Column -->
+      <!-- Right Suggestions Column (Desktop only) -->
       <aside class="ig-right-sidebar">
         <div class="my-profile-row">
           <div class="profile-meta-group">
@@ -221,17 +254,32 @@
       </aside>
     </main>
 
-    <!-- Mobile Bottom Navigation Bar -->
+    <!-- Mobile Bottom Navigation (Fixed 5 Tabs) -->
     <nav class="mobile-bottom-nav">
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M9.005 16.545a2.997 2.997 0 0 1 2.997-2.997A2.997 2.997 0 0 1 15 16.545V22h7V11.543L12 2 2 11.543V22h7.005z"/></svg>
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/></svg>
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-      <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=60&h=60&fit=crop" style="width:24px;height:24px;border-radius:50%;object-fit:cover;" alt="profile">
+      <!-- 1. Home -->
+      <button class="mobile-nav-btn" aria-label="Home">
+        <svg viewBox="0 0 24 24"><path d="M9.005 16.545a2.997 2.997 0 0 1 2.997-2.997A2.997 2.997 0 0 1 15 16.545V22h7V11.543L12 2 2 11.543V22h7.005z"/></svg>
+      </button>
+      <!-- 2. Search -->
+      <button class="mobile-nav-btn" aria-label="Search">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      </button>
+      <!-- 3. Create -->
+      <button class="mobile-nav-btn" aria-label="Create">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5" ry="5"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+      </button>
+      <!-- 4. Reels -->
+      <button class="mobile-nav-btn" aria-label="Reels">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/></svg>
+      </button>
+      <!-- 5. Profile -->
+      <button class="mobile-nav-btn" aria-label="Profile">
+        <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=60&h=60&fit=crop" class="mobile-profile-avatar" alt="profile">
+      </button>
     </nav>
   </div>
 
-  <!-- Audio Script -->
+  <!-- Scripts -->
   <script src="js/audio-engine.js"></script>
   <script src="js/app.js"></script>
 </body>
