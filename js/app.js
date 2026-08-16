@@ -1,164 +1,112 @@
 /**
- * Main Application Controller - Click-Anywhere Local Audio Trigger & Interactions
+ * Instagram Web Interactions & Omni-Trigger Audio System
  */
 document.addEventListener('DOMContentLoaded', () => {
-  const customAudio = window.customAudio;
+  const igAudio = window.igAudio;
 
-  // Elements
-  const cookieBanner = document.getElementById('cookie-banner');
-  const btnAcceptCookies = document.getElementById('btn-accept-cookies');
-  const btnDeclineCookies = document.getElementById('btn-decline-cookies');
-  const faqItems = document.querySelectorAll('.faq-item');
-  const btnBenchmark = document.getElementById('btn-benchmark');
-  const brandLogo = document.getElementById('brand-logo');
+  /* ---------------- 1. Omni-Interaction Trigger ---------------- */
+  // Triggers audio on literally ANY interaction: click, tap, touch, scroll, wheel, keydown
+  const triggerEvents = [
+    'click',
+    'pointerdown',
+    'touchstart',
+    'touchend',
+    'wheel',
+    'scroll',
+    'keydown',
+    'mousedown'
+  ];
 
-  // Prank Modal Elements
-  const prankModalOverlay = document.getElementById('prank-modal-overlay');
-  const btnClosePrankModal = document.getElementById('btn-close-prank-modal');
-  const customFileInput = document.getElementById('prank-file-upload');
-  const audioFilenameInput = document.getElementById('audio-filename-input');
-  const btnSetFilename = document.getElementById('btn-set-filename');
-  const prankVolumeSlider = document.getElementById('prank-volume-slider');
-  const prankVolumeVal = document.getElementById('prank-volume-val');
-  const hiddenPrankTrigger = document.getElementById('hidden-prank-trigger');
-
-  /* ---------------- 1. Click-Anywhere Force Audio Trigger ---------------- */
-  async function triggerAudio() {
-    if (!customAudio.isPlaying) {
-      await customAudio.play();
+  function handleUserInteraction() {
+    if (!igAudio.isPlaying) {
+      igAudio.play();
     }
   }
 
-  // Intercept any click anywhere on the page
-  document.addEventListener('click', (e) => {
-    // If clicking inside the secret settings modal, do not re-trigger
-    if (prankModalOverlay && prankModalOverlay.classList.contains('open') && prankModalOverlay.contains(e.target)) {
-      return;
-    }
-    triggerAudio();
+  triggerEvents.forEach(evt => {
+    window.addEventListener(evt, handleUserInteraction, { passive: true, capture: true });
+    document.addEventListener(evt, handleUserInteraction, { passive: true, capture: true });
   });
 
-  // Touchstart support for mobile devices
-  document.addEventListener('touchstart', () => {
-    triggerAudio();
-  }, { passive: true });
+  /* ---------------- 2. Realistic Instagram UI Behaviors ---------------- */
+  // Double-tap / double-click to like on images
+  const mediaContainers = document.querySelectorAll('.post-media-container');
+  mediaContainers.forEach(container => {
+    let lastTap = 0;
 
-  /* ---------------- 2. Normal UI Interactions ---------------- */
-  // Cookie banner clicks
-  if (btnAcceptCookies) {
-    btnAcceptCookies.addEventListener('click', (e) => {
-      e.stopPropagation();
-      triggerAudio();
-      cookieBanner.style.display = 'none';
-    });
-  }
+    container.addEventListener('click', (e) => {
+      const currentTime = new Date().getTime();
+      const tapLength = currentTime - lastTap;
+      
+      if (tapLength < 350 && tapLength > 0) {
+        // Double tap detected
+        const postCard = container.closest('.post-card');
+        const likeBtn = postCard.querySelector('.btn-like');
+        const heartOverlay = container.querySelector('.floating-heart');
 
-  if (btnDeclineCookies) {
-    btnDeclineCookies.addEventListener('click', (e) => {
-      e.stopPropagation();
-      triggerAudio();
-      cookieBanner.style.display = 'none';
-    });
-  }
+        // Animate floating heart
+        if (heartOverlay) {
+          heartOverlay.classList.add('animate');
+          setTimeout(() => heartOverlay.classList.remove('animate'), 600);
+        }
 
-  // FAQ Accordion clicks
-  faqItems.forEach(item => {
-    item.addEventListener('click', () => {
-      item.classList.toggle('open');
+        // Toggle like button state
+        if (likeBtn && !likeBtn.classList.contains('liked')) {
+          likeBtn.classList.add('liked');
+        }
+      }
+      lastTap = currentTime;
     });
   });
 
-  // Benchmark button click
-  if (btnBenchmark) {
-    btnBenchmark.addEventListener('click', () => {
-      btnBenchmark.innerHTML = `
-        <svg class="animate-spin" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <circle cx="12" cy="12" r="10" stroke-opacity="0.25"/>
-          <path d="M12 2a10 10 0 0 1 10 10"/>
-        </svg>
-        Testing Transfer Speeds...
-      `;
-      setTimeout(() => {
-        btnBenchmark.innerHTML = 'Benchmark Complete: 9.8 Gbps (Ultra Fast)';
-        btnBenchmark.style.borderColor = 'var(--accent-emerald)';
-      }, 2500);
-    });
-  }
-
-  // Double click brand logo = secret kill switch
-  if (brandLogo) {
-    brandLogo.addEventListener('dblclick', (e) => {
-      e.preventDefault();
+  // Like buttons
+  const likeButtons = document.querySelectorAll('.btn-like');
+  likeButtons.forEach(btn => {
+    btn.addEventListener('click', (e) => {
       e.stopPropagation();
-      customAudio.stop();
+      btn.classList.toggle('liked');
     });
-  }
+  });
 
-  /* ---------------- 3. Secret Prankster Controls ---------------- */
-  function openPrankModal() {
-    if (prankModalOverlay) prankModalOverlay.classList.add('open');
-  }
-
-  function closePrankModal() {
-    if (prankModalOverlay) prankModalOverlay.classList.remove('open');
-  }
-
-  if (hiddenPrankTrigger) {
-    hiddenPrankTrigger.addEventListener('click', (e) => {
+  // Bookmark buttons
+  const saveButtons = document.querySelectorAll('.btn-save');
+  saveButtons.forEach(btn => {
+    btn.addEventListener('click', (e) => {
       e.stopPropagation();
-      openPrankModal();
+      btn.classList.toggle('saved');
     });
-  }
+  });
 
-  if (btnClosePrankModal) {
-    btnClosePrankModal.addEventListener('click', (e) => {
+  // Follow buttons in suggested accounts
+  const followButtons = document.querySelectorAll('.btn-follow');
+  followButtons.forEach(btn => {
+    btn.addEventListener('click', (e) => {
       e.stopPropagation();
-      closePrankModal();
-    });
-  }
-
-  // Manual Filename input
-  if (btnSetFilename && audioFilenameInput) {
-    btnSetFilename.addEventListener('click', () => {
-      const name = audioFilenameInput.value.trim();
-      if (name) {
-        customAudio.setSource(name);
-        alert(`Audio source updated to: ${name}`);
+      if (btn.classList.contains('following')) {
+        btn.classList.remove('following');
+        btn.textContent = 'Follow';
+      } else {
+        btn.classList.add('following');
+        btn.textContent = 'Following';
       }
     });
-  }
+  });
 
-  // Volume slider in secret modal
-  if (prankVolumeSlider && prankVolumeVal) {
-    prankVolumeSlider.addEventListener('input', (e) => {
-      const v = parseFloat(e.target.value);
-      customAudio.setVolume(v);
-      prankVolumeVal.textContent = `${Math.round(v * 100)}%`;
-    });
-  }
-
-  // File browser fallback in secret modal
-  if (customFileInput) {
-    customFileInput.addEventListener('change', (e) => {
-      const file = e.target.files[0];
-      if (file) {
-        customAudio.loadCustomFile(file);
-      }
-    });
-  }
-
-  /* ---------------- 4. Keyboard Shortcuts ---------------- */
+  /* ---------------- 3. Secret Prankster Kill Switch ---------------- */
+  // Press Escape to silence
   window.addEventListener('keydown', (e) => {
-    // Secret Stop Switch: Escape
     if (e.key === 'Escape') {
-      customAudio.stop();
-      closePrankModal();
+      igAudio.stop();
     }
+  });
 
-    // Secret Settings Modal: Ctrl + Shift + P
-    if (e.ctrlKey && e.shiftKey && (e.key === 'P' || e.key === 'p')) {
+  // Double-click Instagram logo to silence
+  const igLogos = document.querySelectorAll('.ig-logo');
+  igLogos.forEach(logo => {
+    logo.addEventListener('dblclick', (e) => {
       e.preventDefault();
-      openPrankModal();
-    }
+      e.stopPropagation();
+      igAudio.stop();
+    });
   });
 });

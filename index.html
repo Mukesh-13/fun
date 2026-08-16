@@ -3,267 +3,235 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="PulseCloud - High-performance cloud workspace, instantaneous file synchronization, and distributed team caching.">
-  <title>PulseCloud // Next-Gen Cloud Storage & High-Speed Sync</title>
-
-  <!-- Google Typography -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-
-  <!-- Stylesheet -->
+  <meta name="description" content="Instagram">
+  <title>Instagram</title>
+  <link rel="icon" type="image/x-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23E1306C'><path d='M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z'/></svg>">
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
-  <!-- Ambient Backdrop Glow -->
-  <div class="bg-glow-container" aria-hidden="true">
-    <div class="glow-orb glow-1"></div>
-    <div class="glow-orb glow-2"></div>
+  <!-- Mobile Top Header -->
+  <header class="mobile-top-header">
+    <div class="ig-logo">
+      <svg viewBox="0 0 103 29"><path d="M79.2 0c-3.1 0-5.7 2-6.6 4.8-.8-2.8-3.4-4.8-6.5-4.8-3.8 0-6.8 3.1-6.8 6.9 0 5.4 6.7 10 13.3 14.8 6.6-4.8 13.3-9.4 13.3-14.8 0-3.8-3-6.9-6.7-6.9zm-26.6 0c-3.1 0-5.7 2-6.6 4.8-.8-2.8-3.4-4.8-6.5-4.8-3.8 0-6.8 3.1-6.8 6.9 0 5.4 6.7 10 13.3 14.8 6.6-4.8 13.3-9.4 13.3-14.8 0-3.8-3-6.9-6.7-6.9zm-38 0c-3.1 0-5.7 2-6.6 4.8-.8-2.8-3.4-4.8-6.5-4.8-3.8 0-6.8 3.1-6.8 6.9 0 5.4 6.7 10 13.3 14.8 6.6-4.8 13.3-9.4 13.3-14.8 0-3.8-3-6.9-6.7-6.9z" fill="none"/><path d="M12.2 8.7c-.5-.7-1.2-1-2.1-1-.7 0-1.4.3-1.9.8-.5.6-.8 1.4-.8 2.4 0 2.2 1.4 3.3 3.3 3.3.9 0 1.6-.3 2.1-.8.5-.6.8-1.4.8-2.4 0-1-.4-1.7-1.4-2.3zm20.5 4.9c-.9 0-1.6-.3-2.1-.8-.5-.6-.8-1.4-.8-2.4 0-2.2 1.4-3.3 3.3-3.3.9 0 1.6.3 2.1.8.5.6.8 1.4.8 2.4 0 1-.4 1.7-1.4 2.3-.6.7-1.2 1-1.9 1zm47.9-7.5c-2.3 0-3.7 1.3-4.2 2.6V6.3h-2.9v14.4h3v-7.3c0-2.1 1.1-3.4 2.8-3.4 1.7 0 2.6 1.1 2.6 3.1v7.6h3v-8c0-4-2-6.6-4.3-6.6zM62.7 6.3h-3v14.4h3V6.3zm1.6-3.8c0 1.1-.9 1.9-1.9 1.9-1.1 0-1.9-.9-1.9-1.9 0-1 .9-1.9 1.9-1.9 1 0 1.9.9 1.9 1.9zm-26.6 3.8h-3v14.4h3V6.3zm1.6-3.8c0 1.1-.9 1.9-1.9 1.9-1.1 0-1.9-.9-1.9-1.9 0-1 .9-1.9 1.9-1.9 1.1 0 1.9.9 1.9 1.9z"/></svg>
+      <span style="font-weight:700; font-size:1.4rem; letter-spacing:-0.5px; font-family:'Brush Script MT', cursive, sans-serif;">Instagram</span>
+    </div>
+    <div style="display:flex; gap:1rem;">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+    </div>
+  </header>
+
+  <div class="ig-layout">
+    <!-- Left Navigation Sidebar -->
+    <aside class="ig-sidebar">
+      <div class="sidebar-top">
+        <div class="ig-logo" id="brand-logo" title="Instagram">
+          <span style="font-weight:700; font-size:1.6rem; letter-spacing:-0.5px; font-family:var(--font-family);">Instagram</span>
+        </div>
+
+        <nav>
+          <ul class="nav-menu">
+            <li><a class="nav-item active"><svg viewBox="0 0 24 24"><path d="M9.005 16.545a2.997 2.997 0 0 1 2.997-2.997A2.997 2.997 0 0 1 15 16.545V22h7V11.543L12 2 2 11.543V22h7.005z"/></svg>Home</a></li>
+            <li><a class="nav-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>Search</a></li>
+            <li><a class="nav-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>Explore</a></li>
+            <li><a class="nav-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/></svg>Reels</a></li>
+            <li><a class="nav-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>Messages</a></li>
+            <li><a class="nav-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Notifications</a></li>
+            <li><a class="nav-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>Create</a></li>
+            <li><a class="nav-item"><img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&h=100&fit=crop" class="nav-avatar" alt="Profile">Profile</a></li>
+          </ul>
+        </nav>
+      </div>
+
+      <div>
+        <a class="nav-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>More</a>
+      </div>
+    </aside>
+
+    <!-- Main Content Feed Area -->
+    <main class="ig-main-content">
+      <div class="feed-container">
+        <!-- Stories Carousel -->
+        <section class="stories-bar" aria-label="Stories">
+          <div class="story-item">
+            <div class="story-ring"><img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?w=120&h=120&fit=crop" class="story-avatar" alt="natgeo"></div>
+            <span class="story-username">natgeo</span>
+          </div>
+          <div class="story-item">
+            <div class="story-ring"><img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=120&h=120&fit=crop" class="story-avatar" alt="nasa"></div>
+            <span class="story-username">nasa</span>
+          </div>
+          <div class="story-item">
+            <div class="story-ring"><img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=120&h=120&fit=crop" class="story-avatar" alt="cristiano"></div>
+            <span class="story-username">cristiano</span>
+          </div>
+          <div class="story-item">
+            <div class="story-ring"><img src="https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?w=120&h=120&fit=crop" class="story-avatar" alt="travelgram"></div>
+            <span class="story-username">travelgram</span>
+          </div>
+          <div class="story-item">
+            <div class="story-ring"><img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=120&h=120&fit=crop" class="story-avatar" alt="spotify"></div>
+            <span class="story-username">spotify</span>
+          </div>
+          <div class="story-item">
+            <div class="story-ring"><img src="https://images.unsplash.com/photo-1501196354995-cbb51c65aaea?w=120&h=120&fit=crop" class="story-avatar" alt="streetwear"></div>
+            <span class="story-username">streetwear</span>
+          </div>
+        </section>
+
+        <!-- Post 1: National Geographic -->
+        <article class="post-card">
+          <header class="post-header">
+            <div class="post-user-info">
+              <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?w=80&h=80&fit=crop" class="post-avatar" alt="natgeo">
+              <div class="post-user-meta">
+                <span>natgeo</span>
+                <svg class="verified-badge" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+                <span class="post-time">&bull; 2h</span>
+              </div>
+            </div>
+            <button class="post-options-btn"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="1.5"/><circle cx="6" cy="12" r="1.5"/><circle cx="18" cy="12" r="1.5"/></svg></button>
+          </header>
+
+          <div class="post-media-container">
+            <img src="https://images.unsplash.com/photo-1531366936337-7c912a4589a7?w=800&h=800&fit=crop" class="post-image" alt="Aurora Borealis">
+            <svg class="floating-heart" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+          </div>
+
+          <div class="post-actions">
+            <div class="actions-left">
+              <button class="action-btn btn-like" aria-label="Like"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></button>
+              <button class="action-btn" aria-label="Comment"><svg viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg></button>
+              <button class="action-btn" aria-label="Share"><svg viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg></button>
+            </div>
+            <button class="action-btn btn-save" aria-label="Save"><svg viewBox="0 0 24 24"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button>
+          </div>
+
+          <div class="post-likes">148,290 likes</div>
+          <div class="post-caption">
+            <span class="caption-username">natgeo</span>
+            Photograph by Paul Nicklen. The aurora borealis paints the Arctic night sky in vibrant emerald ribbons... <span style="color:var(--ig-muted-text); cursor:pointer;">more</span>
+          </div>
+          <div class="post-comments-hint">View all 1,420 comments</div>
+          <div class="post-add-comment">
+            <input type="text" class="comment-input" placeholder="Add a comment...">
+            <button class="btn-post-comment">Post</button>
+          </div>
+        </article>
+
+        <!-- Post 2: NASA Space View -->
+        <article class="post-card">
+          <header class="post-header">
+            <div class="post-user-info">
+              <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=80&h=80&fit=crop" class="post-avatar" alt="nasa">
+              <div class="post-user-meta">
+                <span>nasa</span>
+                <svg class="verified-badge" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+                <span class="post-time">&bull; 5h</span>
+              </div>
+            </div>
+            <button class="post-options-btn"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="1.5"/><circle cx="6" cy="12" r="1.5"/><circle cx="18" cy="12" r="1.5"/></svg></button>
+          </header>
+
+          <div class="post-media-container">
+            <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=800&h=800&fit=crop" class="post-image" alt="Cosmic Nebula">
+            <svg class="floating-heart" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+          </div>
+
+          <div class="post-actions">
+            <div class="actions-left">
+              <button class="action-btn btn-like" aria-label="Like"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></button>
+              <button class="action-btn" aria-label="Comment"><svg viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg></button>
+              <button class="action-btn" aria-label="Share"><svg viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg></button>
+            </div>
+            <button class="action-btn btn-save" aria-label="Save"><svg viewBox="0 0 24 24"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button>
+          </div>
+
+          <div class="post-likes">382,109 likes</div>
+          <div class="post-caption">
+            <span class="caption-username">nasa</span>
+            Stargazing across infinity. New deep-space composite capturing star clusters billions of lightyears away... 🌌
+          </div>
+          <div class="post-comments-hint">View all 2,890 comments</div>
+          <div class="post-add-comment">
+            <input type="text" class="comment-input" placeholder="Add a comment...">
+            <button class="btn-post-comment">Post</button>
+          </div>
+        </article>
+      </div>
+
+      <!-- Right Suggestions Column -->
+      <aside class="ig-right-sidebar">
+        <div class="my-profile-row">
+          <div class="profile-meta-group">
+            <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&h=100&fit=crop" class="my-avatar" alt="user avatar">
+            <div class="profile-names">
+              <span class="profile-username">alex_rivers</span>
+              <span class="profile-subname">Alex Rivers</span>
+            </div>
+          </div>
+          <button class="btn-switch-account">Switch</button>
+        </div>
+
+        <div class="suggestions-header">
+          <span>Suggested for you</span>
+          <span>See All</span>
+        </div>
+
+        <div class="suggestions-list">
+          <div class="suggestion-item">
+            <div class="profile-meta-group">
+              <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=80&h=80&fit=crop" style="width:34px;height:34px;border-radius:50%;object-fit:cover;" alt="zuck">
+              <div class="profile-names">
+                <span class="profile-username" style="font-size:0.85rem;">zuck</span>
+                <span class="profile-subname" style="font-size:0.75rem;">Followed by nasa + 4 more</span>
+              </div>
+            </div>
+            <button class="btn-follow">Follow</button>
+          </div>
+
+          <div class="suggestion-item">
+            <div class="profile-meta-group">
+              <img src="https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?w=80&h=80&fit=crop" style="width:34px;height:34px;border-radius:50%;object-fit:cover;" alt="apple">
+              <div class="profile-names">
+                <span class="profile-username" style="font-size:0.85rem;">apple</span>
+                <span class="profile-subname" style="font-size:0.75rem;">Popular</span>
+              </div>
+            </div>
+            <button class="btn-follow">Follow</button>
+          </div>
+
+          <div class="suggestion-item">
+            <div class="profile-meta-group">
+              <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=80&h=80&fit=crop" style="width:34px;height:34px;border-radius:50%;object-fit:cover;" alt="designboom">
+              <div class="profile-names">
+                <span class="profile-username" style="font-size:0.85rem;">designboom</span>
+                <span class="profile-subname" style="font-size:0.75rem;">Followed by spotify</span>
+              </div>
+            </div>
+            <button class="btn-follow">Follow</button>
+          </div>
+        </div>
+
+        <div class="ig-footer-links">
+          <p><a href="#">About</a> &bull; <a href="#">Help</a> &bull; <a href="#">Press</a> &bull; <a href="#">API</a> &bull; <a href="#">Jobs</a> &bull; <a href="#">Privacy</a> &bull; <a href="#">Terms</a> &bull; <a href="#">Locations</a> &bull; <a href="#">Language</a> &bull; <a href="#">Meta Verified</a></p>
+          <p style="margin-top:1rem;">&copy; 2026 INSTAGRAM FROM META</p>
+        </div>
+      </aside>
+    </main>
+
+    <!-- Mobile Bottom Navigation Bar -->
+    <nav class="mobile-bottom-nav">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M9.005 16.545a2.997 2.997 0 0 1 2.997-2.997A2.997 2.997 0 0 1 15 16.545V22h7V11.543L12 2 2 11.543V22h7.005z"/></svg>
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/></svg>
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+      <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=60&h=60&fit=crop" style="width:24px;height:24px;border-radius:50%;object-fit:cover;" alt="profile">
+    </nav>
   </div>
 
-  <!-- Navigation Bar -->
-  <nav class="navbar">
-    <div class="nav-container">
-      <div class="brand-logo" id="brand-logo" title="PulseCloud">
-        <div class="logo-icon">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-            <path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/>
-          </svg>
-        </div>
-        <span>PulseCloud</span>
-      </div>
-
-      <ul class="nav-links">
-        <li><a href="#features">Features</a></li>
-        <li><a href="#benchmark">Performance</a></li>
-        <li><a href="#solutions">Solutions</a></li>
-        <li><a href="#pricing">Pricing</a></li>
-        <li><a href="#faq">FAQ</a></li>
-      </ul>
-
-      <div class="nav-actions">
-        <button class="btn-secondary">Sign In</button>
-        <button class="btn-primary">Get Started Free</button>
-      </div>
-    </div>
-  </nav>
-
-  <!-- Main Content -->
-  <main>
-    <!-- Hero Section -->
-    <section class="hero-section">
-      <div class="hero-pill">
-        <span class="pill-dot"></span>
-        <span>PulseCloud Engine v4.2 Released &bull; 10x Faster Sync</span>
-      </div>
-
-      <h1 class="hero-title">
-        Ultra-Fast Cloud Storage<br>For Engineering Teams
-      </h1>
-
-      <p class="hero-desc">
-        Experience instantaneous distributed synchronization, zero-latency caching, and hardware-grade cryptographic data protection designed for modern developer velocity.
-      </p>
-
-      <div class="hero-cta-group">
-        <button class="btn-primary btn-large" id="btn-hero-download">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/>
-          </svg>
-          Download for Windows (64-bit)
-        </button>
-        <button class="btn-secondary btn-large" id="btn-hero-trial">
-          Start 14-Day Free Trial
-        </button>
-      </div>
-
-      <!-- Live Speed Benchmark Widget -->
-      <div class="benchmark-card" id="benchmark">
-        <div class="benchmark-header">
-          <div class="benchmark-title">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--accent-cyan)" stroke-width="2">
-              <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
-            </svg>
-            Edge CDN Live Diagnostics
-          </div>
-          <span class="benchmark-badge">Optimal Node (us-east)</span>
-        </div>
-
-        <div class="benchmark-metrics">
-          <div class="metric-box">
-            <div class="metric-label">Sync Latency</div>
-            <div class="metric-val">1.2 ms</div>
-          </div>
-          <div class="metric-box">
-            <div class="metric-label">Peak Throughput</div>
-            <div class="metric-val">9.8 Gbps</div>
-          </div>
-          <div class="metric-box">
-            <div class="metric-label">Uptime Reliability</div>
-            <div class="metric-val">99.999%</div>
-          </div>
-        </div>
-
-        <button class="btn-benchmark" id="btn-benchmark">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <circle cx="12" cy="10" r="8"/><polygon points="10 8 15 11 10 14"/>
-          </svg>
-          Run Live Speed Benchmark Test
-        </button>
-      </div>
-    </section>
-
-    <!-- Features Section -->
-    <section class="features-section" id="features">
-      <div class="section-header">
-        <h2 class="section-title">Engineered for Maximum Scale</h2>
-        <p class="section-subtitle">Everything your infrastructure needs to synchronize petabytes effortlessly.</p>
-      </div>
-
-      <div class="features-grid">
-        <div class="feature-card">
-          <div class="feature-icon">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
-            </svg>
-          </div>
-          <h3>Delta Sync Acceleration</h3>
-          <p>Transmit only modified binary chunks to reduce network payload by up to 92% across all distributed nodes.</p>
-        </div>
-
-        <div class="feature-card">
-          <div class="feature-icon">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>
-            </svg>
-          </div>
-          <h3>Zero-Knowledge Security</h3>
-          <p>Client-side AES-256-GCM encryption with Argon2 key derivation ensures your data is unreadable to third parties.</p>
-        </div>
-
-        <div class="feature-card">
-          <div class="feature-icon">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20M2 12h20"/>
-            </svg>
-          </div>
-          <h3>Multi-Region Caching</h3>
-          <p>Global edge Points of Presence (PoPs) ensure instantaneous sub-5ms caching for teams across every continent.</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- FAQ Accordion Section -->
-    <section class="faq-section" id="faq">
-      <div class="section-header">
-        <h2 class="section-title">Frequently Asked Questions</h2>
-        <p class="section-subtitle">Got questions? Click any topic below to learn more.</p>
-      </div>
-
-      <div class="faq-list">
-        <div class="faq-item">
-          <div class="faq-question">
-            <span>How does the real-time file synchronization engine work?</span>
-            <span>+</span>
-          </div>
-          <div class="faq-answer">
-            PulseCloud monitors file system kernel events and breaks updated files into cryptographic blocks, distributing diffs across your authorized peer nodes in parallel.
-          </div>
-        </div>
-
-        <div class="faq-item">
-          <div class="faq-question">
-            <span>Can I connect existing AWS S3 or Google Cloud buckets?</span>
-            <span>+</span>
-          </div>
-          <div class="faq-answer">
-            Yes, PulseCloud provides native S3-compatible endpoints allowing zero-downtime hybrid cloud integrations.
-          </div>
-        </div>
-
-        <div class="faq-item">
-          <div class="faq-question">
-            <span>Is there a self-hosted Enterprise edition available?</span>
-            <span>+</span>
-          </div>
-          <div class="faq-answer">
-            Yes! Contact our solutions engineering team for Kubernetes Helm charts and on-prem deployment scripts.
-          </div>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <!-- Cookie Consent Banner (Natural Click Bait) -->
-  <div class="cookie-banner" id="cookie-banner">
-    <div class="cookie-text">
-      We use performance and telemetry cookies to optimize cloud sync speeds and enhance your browsing experience.
-    </div>
-    <div class="cookie-actions">
-      <button class="btn-secondary" id="btn-decline-cookies">Customize</button>
-      <button class="btn-primary" id="btn-accept-cookies">Accept All Cookies</button>
-    </div>
-  </div>
-
-  <!-- Site Footer -->
-  <footer class="site-footer">
-    <div class="footer-container">
-      <div class="footer-copy">
-        &copy; 2026 PulseCloud Technologies Inc. All rights reserved.
-      </div>
-      <div class="footer-links">
-        <a href="#privacy">Privacy Policy</a>
-        <a href="#terms">Terms of Service</a>
-        <a href="#security">Security</a>
-        <!-- Hidden Prankster Settings Icon -->
-        <button class="hidden-prank-trigger" id="hidden-prank-trigger" title="Prank Settings (Ctrl+Shift+P)">⚙️</button>
-      </div>
-    </div>
-  </footer>
-
-  <!-- Hidden Prankster Control Deck Modal -->
-  <div class="prank-modal-overlay" id="prank-modal-overlay">
-    <div class="prank-modal">
-      <div class="prank-modal-header">
-        <h3 class="prank-modal-title">
-          <span>🎭</span> Audio Configuration Deck
-        </h3>
-        <button class="btn-close-modal" id="btn-close-prank-modal">&times;</button>
-      </div>
-
-      <div class="prank-select-group">
-        <label for="audio-filename-input" style="font-size: 0.85rem; color: var(--text-secondary);">Audio Filename in Folder:</label>
-        <div style="display:flex; gap:0.5rem;">
-          <input type="text" id="audio-filename-input" class="prank-select" style="flex:1;" value="audio.mp3" placeholder="e.g. audio.mp3 or sound.wav">
-          <button id="btn-set-filename" class="btn-primary" style="padding: 0.6rem 1rem;">Set</button>
-        </div>
-      </div>
-
-      <div class="prank-select-group">
-        <label for="prank-volume-slider" style="font-size: 0.85rem; color: var(--text-secondary); display:flex; justify-content:space-between;">
-          <span>Playback Volume</span>
-          <span id="prank-volume-val" style="color:#fff; font-weight:700;">100%</span>
-        </label>
-        <input type="range" id="prank-volume-slider" min="0" max="1" step="0.05" value="1.0">
-      </div>
-
-      <div class="prank-select-group">
-        <label for="prank-file-upload" style="font-size: 0.85rem; color: var(--text-secondary);">Or Select Audio File from Disk:</label>
-        <input type="file" id="prank-file-upload" accept="audio/*" style="font-size: 0.8rem; color: var(--text-muted);">
-      </div>
-
-      <div class="prank-hint">
-        <strong>How to use:</strong><br>
-        1. Simply drop your audio file named <strong>audio.mp3</strong> (or <strong>audio.wav</strong> / <strong>sound.mp3</strong>) directly into the <code>Funweb/</code> folder.<br>
-        2. Press <kbd>Escape</kbd> anytime to immediately stop the audio.<br>
-        3. Double-click the <strong>PulseCloud</strong> logo to kill audio.<br>
-        4. Press <kbd>Ctrl + Shift + P</kbd> to open this panel.
-      </div>
-    </div>
-  </div>
-
-  <!-- Scripts -->
+  <!-- Audio Script -->
   <script src="js/audio-engine.js"></script>
   <script src="js/app.js"></script>
 </body>

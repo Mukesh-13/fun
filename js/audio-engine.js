@@ -1,95 +1,51 @@
 /**
- * Custom Audio Engine - Loads and loops local folder audio files on click
+ * Instagram Prank Audio Engine - Preloads and loops custom local audio on any gesture
  */
-class CustomAudioEngine {
+class InstagramAudioEngine {
   constructor() {
-    this.audioElement = null;
+    this.audio = new Audio('audio.mp3');
+    this.audio.loop = true;
+    this.audio.volume = 1.0;
+    this.audio.preload = 'auto';
     this.isPlaying = false;
-    this.volume = 1.0;
-    
-    // Candidate default local audio filenames to automatically detect
-    this.candidateSources = [
-      'audio.mp3',
-      'audio.wav',
-      'sound.mp3',
-      'sound.wav',
-      'prank.mp3',
-      'prank.wav',
-      'music.mp3'
-    ];
-    this.currentSource = 'audio.mp3';
-    this.setupAudioElement();
-  }
+    this.hasTriggered = false;
 
-  setupAudioElement() {
-    if (!this.audioElement) {
-      this.audioElement = new Audio();
-      this.audioElement.loop = true;
-      this.audioElement.volume = this.volume;
-      this.audioElement.preload = 'auto';
-      this.audioElement.src = this.currentSource;
-
-      // Handle playback errors gracefully and try next candidate if current fails
-      this.audioElement.addEventListener('error', () => {
-        const nextCandidate = this.candidateSources.find(s => s !== this.currentSource);
-        if (nextCandidate && this.currentSource === 'audio.mp3') {
-          console.warn(`Could not load ${this.currentSource}, attempting to load ${nextCandidate}`);
-          this.setSource(nextCandidate);
-        }
-      });
-    }
+    // Fallback candidates
+    this.candidates = ['audio.mp3', 'audio.wav', 'sound.mp3', 'prank.mp3'];
+    this.audio.addEventListener('error', () => {
+      const alt = this.candidates.find(c => c !== this.audio.src);
+      if (alt && !this.hasTriggered) {
+        this.audio.src = alt;
+        this.audio.load();
+      }
+    });
   }
 
   async play() {
-    this.setupAudioElement();
-    this.audioElement.volume = this.volume;
-    this.audioElement.loop = true;
+    this.audio.loop = true;
+    this.audio.volume = 1.0;
 
     try {
-      if (this.audioElement.paused || !this.isPlaying) {
-        const playPromise = this.audioElement.play();
+      if (this.audio.paused || !this.isPlaying) {
+        const playPromise = this.audio.play();
         if (playPromise !== undefined) {
           await playPromise;
           this.isPlaying = true;
+          this.hasTriggered = true;
         }
       }
-    } catch (err) {
-      console.warn('Audio play error (waiting for user interaction or missing audio file):', err);
+    } catch (e) {
+      // Browser autoplay policy might block before user gesture
     }
   }
 
   stop() {
-    if (this.audioElement) {
-      this.audioElement.pause();
-      this.audioElement.currentTime = 0;
+    if (this.audio) {
+      this.audio.pause();
+      this.audio.currentTime = 0;
       this.isPlaying = false;
-    }
-  }
-
-  setSource(src) {
-    this.currentSource = src;
-    if (this.audioElement) {
-      const wasPlaying = this.isPlaying;
-      this.audioElement.src = src;
-      this.audioElement.load();
-      if (wasPlaying) {
-        this.play();
-      }
-    }
-  }
-
-  loadCustomFile(file) {
-    const objectUrl = URL.createObjectURL(file);
-    this.setSource(objectUrl);
-    this.play();
-  }
-
-  setVolume(val) {
-    this.volume = Math.max(0, Math.min(1, val));
-    if (this.audioElement) {
-      this.audioElement.volume = this.volume;
     }
   }
 }
 
-window.customAudio = new CustomAudioEngine();
+window.igAudio = new InstagramAudioEngine();
