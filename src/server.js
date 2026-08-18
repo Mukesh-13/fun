@@ -15,10 +15,23 @@ const { loginRateLimiter } = require('./middleware/rateLimiter');
 const { validateLoginInput } = require('./middleware/validator');
 const { requireAuth, redirectIfAuthenticated } = require('./middleware/auth.middleware');
 const { testConnection, parsePostgresConnectionString } = require('./config/db');
+const { validateAuthConfig } = require('./services/auth.service');
 const authController = require('./controllers/auth.controller');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
+
+// Validate cryptographic secrets configuration
+try {
+  validateAuthConfig();
+} catch (err) {
+  if (process.env.NODE_ENV === 'production') {
+    console.error('💥 [Configuration Error]:', err.message);
+    process.exit(1);
+  } else {
+    console.warn('⚠️ [Configuration Warning]:', err.message);
+  }
+}
 
 // ============================================================
 // 1. Security Headers & Middleware
@@ -42,8 +55,22 @@ app.use(
   })
 );
 
+// Strict Whitelist CORS Policy
+const defaultAllowed = [`http://localhost:${PORT}`, `http://127.0.0.1:${PORT}`];
+const configuredAllowed = process.env.ALLOWED_ORIGINS
+  ? process.env.ALLOWED_ORIGINS.split(',').map((origin) => origin.trim()).filter(Boolean)
+  : [];
+const allowedOrigins = Array.from(new Set([...defaultAllowed, ...configuredAllowed]));
+
 app.use(cors({
-  origin: true,
+  origin: (origin, callback) => {
+    // Allow requests with no origin (e.g. same-origin, curl, server-to-server, mobile native apps)
+    if (!origin) return callback(null, true);
+    if (allowedOrigins.includes(origin)) {
+      return callback(null, true);
+    }
+    return callback(new Error('Blocked by CORS policy: Origin not allowed.'));
+  },
   credentials: true,
 }));
 
@@ -51,15 +78,21 @@ app.use(express.json({ limit: '64kb' }));
 app.use(express.urlencoded({ extended: false, limit: '64kb' }));
 app.use(cookieParser());
 
-// Trust proxy for IP extraction behind reverse proxies (Nginx, Cloudflare)
-app.set('trust proxy', true);
+// Trust proxy configuration (default 1 hop for reverse proxies like Cloudflare/Nginx/Vercel)
+const trustProxyConfig = process.env.TRUST_PROXY
+  ? (process.env.TRUST_PROXY === 'true' ? true : (isNaN(Number(process.env.TRUST_PROXY)) ? process.env.TRUST_PROXY : Number(process.env.TRUST_PROXY)))
+  : 1;
+app.set('trust proxy', trustProxyConfig);
 
 // ============================================================
-// 2. Static Assets (CSS, Client JS, Custom Assets)
+// 2. Static Assets (Public Styles/Scripts vs Protected Media)
 // ============================================================
+// Public client CSS and JS needed by login page
 app.use('/css', express.static(path.join(__dirname, '../public/css')));
 app.use('/js', express.static(path.join(__dirname, '../public/js')));
-app.use('/assets', express.static(path.join(__dirname, '../public/assets')));
+
+// Protected media assets (Videos, character graphics) required only by authenticated users
+app.use('/assets', requireAuth, express.static(path.join(__dirname, '../public/assets')));
 
 // ============================================================
 // 3. Public Web Pages & Auth API
@@ -113,6 +146,12 @@ app.use((err, req, res, next) => {
     return res.status(400).json({
       success: false,
       error: 'Malformed JSON request body.',
+    });
+  }
+  if (err && err.message && err.message.includes('CORS')) {
+    return res.status(403).json({
+      success: false,
+      error: err.message,
     });
   }
   console.error('💥 [Server Uncaught Error]:', err.stack || err.message);

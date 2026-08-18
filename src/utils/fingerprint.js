@@ -5,29 +5,37 @@
 const crypto = require('crypto');
 
 /**
- * Extract client IP address taking proxies / Cloudflare / local network into account
+ * Extract client IP address taking verified proxies / Cloudflare / Vercel / local network into account
  * @param {import('express').Request} req 
  * @returns {string} Normalized IP address
  */
 function getClientIp(req) {
-  const forwarded = req.headers['x-forwarded-for'];
-  if (forwarded && typeof forwarded === 'string') {
-    // Leftmost IP is the original client IP in standard X-Forwarded-For
-    const ips = forwarded.split(',').map((ip) => ip.trim());
-    if (ips[0]) return ips[0];
+  // If behind Cloudflare edge
+  const cfIp = req.headers['cf-connecting-ip'];
+  if (cfIp && typeof cfIp === 'string') {
+    return cfIp.trim();
   }
 
-  const realIp = req.headers['x-real-ip'] || req.headers['cf-connecting-ip'];
-  if (realIp && typeof realIp === 'string') {
-    return realIp.trim();
+  // If behind Vercel edge
+  const vercelIp = req.headers['x-vercel-forwarded-for'];
+  if (vercelIp && typeof vercelIp === 'string') {
+    const primary = vercelIp.split(',')[0].trim();
+    if (primary) return primary;
   }
 
-  const socketIp = req.socket?.remoteAddress || req.ip || '127.0.0.1';
-  // Normalize IPv6 localhost to IPv4 format if applicable
-  if (socketIp === '::1' || socketIp === '::ffff:127.0.0.1') {
+  // Express built-in normalized IP (honors app.set('trust proxy', ...))
+  if (req.ip && typeof req.ip === 'string') {
+    const normalized = req.ip.replace(/^::ffff:/, '');
+    if (normalized === '::1') return '127.0.0.1';
+    return normalized;
+  }
+
+  const socketIp = req.socket?.remoteAddress || '127.0.0.1';
+  const normalizedSocket = socketIp.replace(/^::ffff:/, '');
+  if (normalizedSocket === '::1') {
     return '127.0.0.1';
   }
-  return socketIp;
+  return normalizedSocket;
 }
 
 /**
@@ -61,7 +69,7 @@ function generateRequestFingerprint(req) {
     .update(`${ip}::${deviceId}::${userAgent}::${acceptLang}`)
     .digest('hex');
 
-  // IP burst key (IP + normalized user agent family)
+  // IP burst key (IP + prefix)
   const ipKey = crypto
     .createHash('sha256')
     .update(`ip_burst::${ip}`)
@@ -80,3 +88,4 @@ module.exports = {
   getClientDeviceFingerprint,
   generateRequestFingerprint,
 };
+

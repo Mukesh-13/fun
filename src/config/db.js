@@ -93,6 +93,7 @@ function parsePostgresConnectionString(rawUri) {
   }
 
   const isSupabase = host.includes('supabase.co') || host.includes('pooler.supabase.com') || (queryPart && queryPart.includes('sslmode=require'));
+  const rejectUnauthorized = process.env.DB_SSL_REJECT_UNAUTHORIZED === 'true';
 
   return {
     user,
@@ -101,7 +102,7 @@ function parsePostgresConnectionString(rawUri) {
     port,
     database: database.split('?')[0] || 'postgres',
     ssl: isSupabase || process.env.NODE_ENV === 'production'
-      ? { rejectUnauthorized: false }
+      ? { rejectUnauthorized }
       : false,
     max: 10,
     idleTimeoutMillis: 30000,

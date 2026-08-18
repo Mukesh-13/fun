@@ -57,16 +57,10 @@ async function login(req, res) {
       redirectUrl: '/',
     });
   } catch (error) {
-    console.error('❌ [Login Controller Error]:', error.message);
-    const isDbError = error.message.includes('DATABASE_URL') || 
-                      error.message.includes('Database') || 
-                      error.message.includes('Supabase') ||
-                      error.message.includes('connect');
+    console.error('❌ [Login Controller Error]:', error.stack || error.message);
     return res.status(503).json({
       success: false,
-      error: isDbError
-        ? error.message
-        : 'An internal authentication error occurred. Please try again later.',
+      error: 'Authentication service is temporarily unavailable. Please try again later.',
     });
   }
 }

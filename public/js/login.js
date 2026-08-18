@@ -37,7 +37,7 @@
     });
   }
 
-  // Display alert banner
+  // Display alert banner safely without raw innerHTML vulnerability
   function showAlert(message, type = 'error') {
     if (countdownInterval) {
       clearInterval(countdownInterval);
@@ -45,7 +45,7 @@
     }
 
     alertBanner.className = `alert-banner ${type}`;
-    alertText.innerHTML = message;
+    alertText.textContent = message;
     alertBanner.style.display = 'flex';
   }
 

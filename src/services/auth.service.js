@@ -135,12 +135,39 @@ async function authenticateUser(username, password, clientIp) {
 }
 
 /**
+ * Validate JWT and cryptographic environment configuration
+ * @throws {Error} If JWT_SECRET is missing or weak in production
+ */
+function validateAuthConfig() {
+  const secret = process.env.JWT_SECRET;
+  if (!secret || typeof secret !== 'string' || !secret.trim()) {
+    throw new Error('FATAL: JWT_SECRET environment variable is not defined. Refusing to run in insecure state.');
+  }
+
+  if (process.env.NODE_ENV === 'production' && secret.length < 32) {
+    throw new Error('FATAL: JWT_SECRET must be at least 32 characters long in production mode for cryptographic safety.');
+  }
+}
+
+/**
+ * Get validated JWT secret
+ * @returns {string}
+ */
+function getJwtSecret() {
+  const secret = process.env.JWT_SECRET;
+  if (!secret) {
+    throw new Error('JWT_SECRET environment variable is not defined.');
+  }
+  return secret;
+}
+
+/**
  * Generate a signed JWT session token
  * @param {object} user 
  * @returns {string} Signed JWT string
  */
 function generateSessionToken(user) {
-  const secret = process.env.JWT_SECRET || 'fallback_secret_for_dev_only_change_in_prod';
+  const secret = getJwtSecret();
   const ttlHours = parseInt(process.env.SESSION_TTL_HOURS || '24', 10);
 
   return jwt.sign(
@@ -164,7 +191,7 @@ function generateSessionToken(user) {
  */
 function verifySessionToken(token) {
   try {
-    const secret = process.env.JWT_SECRET || 'fallback_secret_for_dev_only_change_in_prod';
+    const secret = getJwtSecret();
     return jwt.verify(token, secret, { algorithms: ['HS256'] });
   } catch (error) {
     return null;
@@ -177,4 +204,6 @@ module.exports = {
   authenticateUser,
   generateSessionToken,
   verifySessionToken,
+  validateAuthConfig,
 };
+

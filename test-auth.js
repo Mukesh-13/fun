@@ -5,11 +5,12 @@
 
 const { InMemoryTtlCache } = require('./src/middleware/rateLimiter');
 const { validateLoginInput } = require('./src/middleware/validator');
-const { hashPassword, verifyPassword, generateSessionToken, verifySessionToken } = require('./src/services/auth.service');
+const { hashPassword, verifyPassword, generateSessionToken, verifySessionToken, validateAuthConfig } = require('./src/services/auth.service');
 const { parsePostgresConnectionString } = require('./src/config/db');
+const { getClientIp } = require('./src/utils/fingerprint');
 
 async function runTests() {
-  console.log('🧪 Starting Verification Test Suite (Username-Only Auth)...\n');
+  console.log('🧪 Starting Verification Test Suite (Security Hardened Gateway)...\n');
   let passed = 0;
   let failed = 0;
 
@@ -38,7 +39,7 @@ async function runTests() {
   // -------------------------------------------------------------
   // Test 1: Bcrypt Hashing & Verification
   // -------------------------------------------------------------
-  console.log('[Test Group 1]: Bcrypt Password Hashing & Salt');
+  console.log('\n[Test Group 1]: Bcrypt Password Hashing & Salt');
   const password = 'CorrectHorseBatteryStaple123!';
   const { hash, salt } = await hashPassword(password);
   assert(hash.startsWith('$2a$12$'), 'Bcrypt hash generated with 12 rounds');
@@ -135,6 +136,35 @@ async function runTests() {
   const nullByteRes = mockValidate({ username: "admin\0injection", password: 'password' });
   assert(nullByteRes.nextCalled === false && nullByteRes.statusCode === 400, "Null byte injection rejected");
 
+  // -------------------------------------------------------------
+  // Test 5: Client IP Extraction & Anti-Spoofing
+  // -------------------------------------------------------------
+  console.log('\n[Test Group 5]: Anti-IP Spoofing & Edge Proxy Header Extraction');
+
+  const cfReq = { headers: { 'cf-connecting-ip': '203.0.113.195' }, ip: '127.0.0.1' };
+  assert(getClientIp(cfReq) === '203.0.113.195', 'Prioritizes Cloudflare cf-connecting-ip header');
+
+  const vercelReq = { headers: { 'x-vercel-forwarded-for': '198.51.100.42, 10.0.0.1' }, ip: '127.0.0.1' };
+  assert(getClientIp(vercelReq) === '198.51.100.42', 'Extracts primary client IP from x-vercel-forwarded-for');
+
+  const expressReq = { headers: {}, ip: '::ffff:192.0.2.1' };
+  assert(getClientIp(expressReq) === '192.0.2.1', 'Normalizes IPv4-mapped IPv6 addresses from req.ip');
+
+  // -------------------------------------------------------------
+  // Test 6: Cryptographic Secret Validation
+  // -------------------------------------------------------------
+  console.log('\n[Test Group 6]: Cryptographic Secret Validation');
+  let configThrew = false;
+  const originalSecret = process.env.JWT_SECRET;
+  delete process.env.JWT_SECRET;
+  try {
+    validateAuthConfig();
+  } catch (e) {
+    configThrew = true;
+  }
+  assert(configThrew === true, 'validateAuthConfig throws fatal error when JWT_SECRET is missing');
+  process.env.JWT_SECRET = originalSecret || 'super_secure_jwt_secret_key_change_in_production_9876543210abcdef';
+
   console.log(`\n======================================================`);
   console.log(`📊 Test Results: ${passed} Passed, ${failed} Failed`);
   console.log(`======================================================\n`);
@@ -145,3 +175,4 @@ async function runTests() {
 }
 
 runTests();
+
