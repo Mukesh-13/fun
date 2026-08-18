@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#030306">
+  <meta name="description" content="Portal">
+  <title>Portal</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/dashboard.css">
+</head>
+<body>
+
+  <!-- Grok-Style Fullscreen Twinkling Starfield Canvas -->
+  <canvas id="starfieldCanvas" aria-hidden="true"></canvas>
+
+  <!-- Minimal Floating Header Capsule -->
+  <header class="floating-header">
+    <div class="user-capsule">
+      <span class="status-pulse"></span>
+      <span id="userDisplayName">User</span>
+      <span id="userRoleBadge" class="role-pill">ADMIN</span>
+    </div>
+    <button id="logoutBtn" class="btn-signout" title="Sign out of portal">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+        <polyline points="16 17 21 12 16 7"/>
+        <line x1="21" y1="12" x2="9" y2="12"/>
+      </svg>
+      <span>Sign Out</span>
+    </button>
+  </header>
+
+  <!-- Main Viewport: Animated Characters Stage -->
+  <main id="appContainer" class="main-viewport">
+    <div class="characters-stage">
+      
+      <!-- ============================================ -->
+      <!-- Character 1: Man                             -->
+      <!-- ============================================ -->
+      <div class="character-card man-card">
+        
+        <!-- Plain Bezel-Free Flashback Video Container -->
+        <div class="thought-bubble man-thought">
+          <div class="video-screen-wrapper" id="manVideoWrapper">
+            <video 
+              id="manVideo" 
+              class="flashback-video" 
+              playsinline
+              preload="metadata"
+              src="/assets/Man_Video.mp4"
+            ></video>
+            
+            <!-- Subtle Grey Time Remaining Display -->
+            <span id="manTimeRemaining" class="time-remaining">0:00</span>
+
+            <!-- Play / Pause Button at Center (hidden during playback) -->
+            <button 
+              type="button" 
+              class="video-toggle-btn" 
+              id="manVideoBtn" 
+              data-video="manVideo" 
+              aria-label="Play / Pause video"
+              title="Play / Pause"
+            >
+              <svg class="icon-play" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M8 5v14l11-7z"/>
+              </svg>
+              <svg class="icon-pause" viewBox="0 0 24 24" fill="currentColor" style="display:none;">
+                <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>
+              </svg>
+            </button>
+          </div>
+
+          <!-- Thought Connector Bubbles (3-Tier Ascending Chain) -->
+          <div class="thought-connector-1"></div>
+          <div class="thought-connector-2"></div>
+          <div class="thought-connector-3"></div>
+        </div>
+
+        <!-- Man Character Figure -->
+        <div class="character-figure man-figure">
+          <img 
+            src="/assets/Man.png" 
+            alt="Man" 
+            class="custom-character-img"
+          >
+        </div>
+        
+        <div class="character-name">How he thinks</div>
+      </div>
+
+      <!-- ============================================ -->
+      <!-- Character 2: Woman                           -->
+      <!-- ============================================ -->
+      <div class="character-card woman-card">
+        
+        <!-- Plain Bezel-Free Flashback Video Container -->
+        <div class="thought-bubble woman-thought">
+          <div class="video-screen-wrapper" id="womanVideoWrapper">
+            <video 
+              id="womanVideo" 
+              class="flashback-video" 
+              playsinline
+              preload="metadata"
+              src="/assets/Woman_Video.mp4"
+            ></video>
+            
+            <!-- Subtle Grey Time Remaining Display -->
+            <span id="womanTimeRemaining" class="time-remaining">0:00</span>
+
+            <!-- Play / Pause Button at Center (hidden during playback) -->
+            <button 
+              type="button" 
+              class="video-toggle-btn" 
+              id="womanVideoBtn" 
+              data-video="womanVideo" 
+              aria-label="Play / Pause video"
+              title="Play / Pause"
+            >
+              <svg class="icon-play" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M8 5v14l11-7z"/>
+              </svg>
+              <svg class="icon-pause" viewBox="0 0 24 24" fill="currentColor" style="display:none;">
+                <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>
+              </svg>
+            </button>
+          </div>
+
+          <!-- Thought Connector Bubbles (3-Tier Ascending Chain) -->
+          <div class="thought-connector-1"></div>
+          <div class="thought-connector-2"></div>
+          <div class="thought-connector-3"></div>
+        </div>
+
+        <!-- Woman Character Figure -->
+        <div class="character-figure woman-figure">
+          <img 
+            src="/assets/Woman.png" 
+            alt="Woman" 
+            class="custom-character-img"
+          >
+        </div>
+        
+        <div class="character-name">How she thinks</div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- ============================================ -->
+  <!-- Custom Glassmorphic Logout Modal Dialog      -->
+  <!-- ============================================ -->
+  <div id="logoutModal" class="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="modalTitle" aria-describedby="modalDesc">
+    <div class="modal-card">
+      <div class="modal-header">
+        <div class="modal-icon-badge">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+            <polyline points="16 17 21 12 16 7"/>
+            <line x1="21" y1="12" x2="9" y2="12"/>
+          </svg>
+        </div>
+        <h2 id="modalTitle" class="modal-title">Sign Out Confirmation</h2>
+        <p id="modalDesc" class="modal-desc">
+          Are you sure you want to terminate your active secure session? You will be redirected to the sign-in page.
+        </p>
+      </div>
+
+      <div class="modal-actions">
+        <button id="cancelLogoutBtn" type="button" class="btn-modal-cancel">
+          Cancel
+        </button>
+        <button id="confirmLogoutBtn" type="button" class="btn-modal-confirm">
+          <span id="confirmLogoutText">Yes, Sign Out</span>
+          <div id="confirmLogoutSpinner" class="modal-spinner" aria-hidden="true"></div>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script src="/js/dashboard.js"></script>
+</body>
+</html>

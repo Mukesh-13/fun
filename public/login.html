@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#07090e">
+  <meta name="description" content="Secure Access Gateway - Sign In">
+  <title>Sign In &mdash; Secure Gateway</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/login.css">
+</head>
+<body>
+
+  <!-- Ambient Glowing Background Elements -->
+  <div class="ambient-bg" aria-hidden="true">
+    <div class="glow-orb glow-orb-1"></div>
+    <div class="glow-orb glow-orb-2"></div>
+    <div class="glow-orb glow-orb-3"></div>
+  </div>
+
+  <div class="auth-wrapper">
+    <main class="auth-card" id="authCard">
+      
+      <!-- Brand & Header -->
+      <header class="auth-header">
+        <div class="brand-icon">
+          <!-- Shield Lock Icon -->
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+            <path d="M12 11a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"/>
+            <path d="M12 15v2"/>
+          </svg>
+        </div>
+        <h1>Welcome Back</h1>
+        <p>Enter your username and password to access the portal</p>
+      </header>
+
+      <!-- Alert / Rate Limit Banner -->
+      <div id="alertBanner" class="alert-banner" role="alert" aria-live="polite">
+        <svg id="alertIcon" class="alert-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="10"/>
+          <line x1="12" y1="8" x2="12" y2="12"/>
+          <line x1="12" y1="16" x2="12.01" y2="16"/>
+        </svg>
+        <div id="alertText" class="alert-text"></div>
+      </div>
+
+      <!-- Login Form -->
+      <form id="loginForm" novalidate autocomplete="on">
+        
+        <!-- Username Field -->
+        <div class="form-group">
+          <label for="usernameInput" class="form-label">Username</label>
+          <div class="input-container">
+            <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+              <circle cx="12" cy="7" r="4"/>
+            </svg>
+            <input 
+              type="text" 
+              id="usernameInput" 
+              name="username" 
+              class="form-input" 
+              placeholder="Enter your username"
+              required 
+              autofocus 
+              autocomplete="username"
+              maxlength="64"
+              spellcheck="false"
+            >
+          </div>
+        </div>
+
+        <!-- Password Field -->
+        <div class="form-group">
+          <label for="passwordInput" class="form-label">Password</label>
+          <div class="input-container">
+            <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+              <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+            </svg>
+            <input 
+              type="password" 
+              id="passwordInput" 
+              name="password" 
+              class="form-input" 
+              placeholder="••••••••••••"
+              required 
+              autocomplete="current-password"
+              maxlength="128"
+            >
+            <button type="button" id="togglePasswordBtn" class="toggle-password" aria-label="Toggle password visibility" title="Toggle password visibility">
+              <svg id="eyeIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                <circle cx="12" cy="12" r="3"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- Submit Action -->
+        <button type="submit" id="submitBtn" class="btn-submit">
+          <span id="btnText">Sign In</span>
+          <div id="btnSpinner" class="spinner" aria-hidden="true"></div>
+        </button>
+
+      </form>
+
+      <!-- Security Trust Footer -->
+      <footer class="auth-footer">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+          <polyline points="9 12 11 14 15 10"/>
+        </svg>
+        <span>Protected with Salted Bcrypt & Rate-Limit Shield</span>
+      </footer>
+
+    </main>
+  </div>
+
+  <script src="/js/fingerprint.js"></script>
+  <script src="/js/login.js"></script>
+</body>
+</html>
