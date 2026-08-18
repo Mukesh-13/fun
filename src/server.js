@@ -123,33 +123,35 @@ app.use((err, req, res, next) => {
 });
 
 // ============================================================
-// 6. Start Server & Diagnostic Startup Logging
+// 6. Start Server & Diagnostic Startup Logging (Local Standalone)
 // ============================================================
-app.listen(PORT, async () => {
-  const dbUrl = process.env.DATABASE_URL || '';
-  const parsed = parsePostgresConnectionString(dbUrl);
-  const maskedHost = parsed ? `${parsed.user ? parsed.user + '@' : ''}${parsed.host}:${parsed.port}/${parsed.database}` : 'NOT_CONFIGURED';
+if (require.main === module) {
+  app.listen(PORT, async () => {
+    const dbUrl = process.env.DATABASE_URL || '';
+    const parsed = parsePostgresConnectionString(dbUrl);
+    const maskedHost = parsed ? `${parsed.user ? parsed.user + '@' : ''}${parsed.host}:${parsed.port}/${parsed.database}` : 'NOT_CONFIGURED';
 
-  console.log(`\n======================================================`);
-  console.log(`🚀 Secure Authentication Gateway Running`);
-  console.log(`======================================================`);
-  console.log(`🌐 Server Port:       ${PORT}`);
-  console.log(`🌱 Environment:       ${process.env.NODE_ENV || 'development'}`);
-  console.log(`🛡️ Rate Limit Window: ${process.env.RATE_LIMIT_WINDOW_MS || '900000'}ms (${Math.round((process.env.RATE_LIMIT_WINDOW_MS || 900000)/60000)} mins)`);
-  console.log(`🔒 Max Attempts:      ${process.env.RATE_LIMIT_MAX_ATTEMPTS || '5'} attempts / device+IP`);
-  console.log(`📡 Database Host:     ${maskedHost}`);
-  console.log(`👉 Web Portal:        http://localhost:${PORT}`);
-  console.log(`🔑 Login Page:        http://localhost:${PORT}/login`);
-  console.log(`======================================================`);
+    console.log(`\n======================================================`);
+    console.log(`🚀 Secure Authentication Gateway Running`);
+    console.log(`======================================================`);
+    console.log(`🌐 Server Port:       ${PORT}`);
+    console.log(`🌱 Environment:       ${process.env.NODE_ENV || 'development'}`);
+    console.log(`🛡️ Rate Limit Window: ${process.env.RATE_LIMIT_WINDOW_MS || '900000'}ms (${Math.round((process.env.RATE_LIMIT_WINDOW_MS || 900000)/60000)} mins)`);
+    console.log(`🔒 Max Attempts:      ${process.env.RATE_LIMIT_MAX_ATTEMPTS || '5'} attempts / device+IP`);
+    console.log(`📡 Database Host:     ${maskedHost}`);
+    console.log(`👉 Web Portal:        http://localhost:${PORT}`);
+    console.log(`🔑 Login Page:        http://localhost:${PORT}/login`);
+    console.log(`======================================================`);
 
-  // Test DB connection immediately on startup
-  const dbHealth = await testConnection();
-  if (dbHealth.connected) {
-    console.log(`✅ [Database Check]: Connected to Supabase PostgreSQL successfully! (Server Time: ${dbHealth.serverTime})`);
-  } else {
-    console.warn(`⚠️ [Database Check]: Could not connect to Supabase: ${dbHealth.error || dbHealth.message}`);
-  }
-  console.log(`======================================================\n`);
-});
+    // Test DB connection immediately on startup
+    const dbHealth = await testConnection();
+    if (dbHealth.connected) {
+      console.log(`✅ [Database Check]: Connected to Supabase PostgreSQL successfully! (Server Time: ${dbHealth.serverTime})`);
+    } else {
+      console.warn(`⚠️ [Database Check]: Could not connect to Supabase: ${dbHealth.error || dbHealth.message}`);
+    }
+    console.log(`======================================================\n`);
+  });
+}
 
 module.exports = app;
