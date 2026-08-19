@@ -54,18 +54,18 @@ export async function proxy(request: NextRequest) {
     return NextResponse.redirect(new URL('/', request.url));
   }
 
-  // Forward request with user headers
-  const requestHeaders = new Headers(request.headers);
   if (userPayload) {
+    const requestHeaders = new Headers(request.headers);
     requestHeaders.set('x-user-id', userPayload.sub as string);
     requestHeaders.set('x-user-role', userPayload.role as string);
+    return NextResponse.next({
+      request: {
+        headers: requestHeaders,
+      },
+    });
   }
 
-  return NextResponse.next({
-    request: {
-      headers: requestHeaders,
-    },
-  });
+  return NextResponse.next();
 }
 
 export const config = {
