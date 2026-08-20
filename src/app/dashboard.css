@@ -45,13 +45,65 @@ html, body {
 /* Minimal Floating Header Capsule */
 .floating-header {
   position: fixed;
-  top: 24px;
-  right: 24px;
+  top: 16px;
+  right: 16px;
+  left: 16px;
   z-index: 100;
   display: flex;
   align-items: center;
-  gap: 12px;
+  justify-content: space-between;
   animation: fadeInDown 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.btn-home {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 8px 12px;
+  background: var(--bg-glass);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--border-glass);
+  border-radius: 50px;
+  color: var(--text-primary);
+  text-decoration: none;
+  font-size: 0.85rem;
+  font-weight: 500;
+  transition: all 0.25s ease;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+}
+
+.btn-home:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.btn-home svg {
+  width: 16px;
+  height: 16px;
+}
+
+.home-text {
+  display: none;
+}
+
+@media (min-width: 861px) {
+  .floating-header {
+    top: 24px;
+    right: 24px;
+    left: auto;
+    justify-content: flex-end;
+    gap: 12px;
+  }
+  .home-text {
+    display: inline;
+  }
 }
 
 @keyframes fadeInDown {
@@ -147,17 +199,18 @@ html, body {
   width: 100vw;
   min-height: 100vh;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
-  padding: 60px 20px 40px;
+  padding: 110px 20px 70px;
+  overflow-y: auto;
 }
 
 .characters-stage {
   display: flex;
-  flex-direction: row;
-  align-items: flex-end;
+  flex-direction: column;
+  align-items: center;
   justify-content: center;
-  gap: 80px;
+  gap: 70px;
   width: 100%;
   max-width: 1000px;
 }
@@ -168,7 +221,27 @@ html, body {
   flex-direction: column;
   align-items: center;
   position: relative;
-  width: clamp(280px, 30vw, 340px);
+  width: 100%;
+  max-width: 320px;
+}
+
+@media (min-width: 861px) {
+  .main-viewport {
+    padding: 60px 20px 40px;
+    align-items: center;
+    overflow-y: visible;
+  }
+  
+  .characters-stage {
+    flex-direction: row;
+    align-items: flex-end;
+    gap: 80px;
+  }
+  
+  .character-card {
+    width: clamp(280px, 30vw, 340px);
+    max-width: none;
+  }
 }
 
 /* ============================================================
@@ -596,36 +669,7 @@ html, body {
   to { transform: rotate(360deg); }
 }
 
-/* ============================================================
-   Mobile Responsiveness (Vertical Stack)
-   ============================================================ */
-
-@media (max-width: 860px) {
-  .floating-header {
-    top: 16px;
-    right: 16px;
-    left: 16px;
-    justify-content: space-between;
-  }
-
-  .main-viewport {
-    padding-top: 110px;
-    padding-bottom: 70px;
-    align-items: flex-start;
-    overflow-y: auto;
-  }
-
-  .characters-stage {
-    flex-direction: column;
-    align-items: center;
-    gap: 70px;
-  }
-
-  .character-card {
-    width: 100%;
-    max-width: 320px;
-  }
-}
+/* (Mobile Responsiveness replaced with Mobile-First rules above) */
 
 /* Dashboard Menu Cards */
 .dashboard-menu {

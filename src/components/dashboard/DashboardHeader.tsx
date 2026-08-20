@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from 'react';
+import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 
 export default function DashboardHeader({ user }: { user: { username: string, role: string } }) {
@@ -36,10 +37,19 @@ export default function DashboardHeader({ user }: { user: { username: string, ro
   return (
     <>
       <header className="floating-header">
-        <div className="user-capsule">
-          <span className="status-pulse"></span>
-          <span>{user.username}</span>
-          <span className="role-pill">{user.role.toUpperCase()}</span>
+        <div className="header-left">
+          <Link href="/" className="btn-home" title="Go to Dashboard Home">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+              <polyline points="9 22 9 12 15 12 15 22"></polyline>
+            </svg>
+            <span className="home-text">Home</span>
+          </Link>
+          <div className="user-capsule">
+            <span className="status-pulse"></span>
+            <span>{user.username}</span>
+            <span className="role-pill">{user.role.toUpperCase()}</span>
+          </div>
         </div>
         <button className="btn-signout" title="Sign out of portal" onClick={() => setShowLogoutModal(true)}>
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
