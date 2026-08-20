@@ -9,6 +9,27 @@ function safeDecode(val: string): string {
   }
 }
 
+function getCaCertificate(): string | undefined {
+  const rawCert = process.env.SUPABASE_CA_CERT || process.env.DB_CA_CERT;
+  if (!rawCert || !rawCert.trim()) return undefined;
+
+  const trimmed = rawCert.trim();
+  if (trimmed.includes('BEGIN CERTIFICATE')) {
+    return trimmed;
+  }
+
+  try {
+    const decoded = Buffer.from(trimmed, 'base64').toString('utf-8');
+    if (decoded.includes('BEGIN CERTIFICATE')) {
+      return decoded;
+    }
+  } catch {
+    // If base64 decoding fails, continue with trimmed
+  }
+
+  return trimmed;
+}
+
 export function parsePostgresConnectionString(rawUri: string | undefined): PoolConfig | null {
   if (!rawUri || typeof rawUri !== 'string') {
     return null;
@@ -21,9 +42,17 @@ export function parsePostgresConnectionString(rawUri: string | undefined): PoolC
     console.warn('⚠️ [Database Config Warning]: Your DATABASE_URL contains placeholder brackets. Please replace them.');
   }
 
+  const ca = getCaCertificate();
+
   const schemeMatch = uri.match(/^(postgres(?:ql)?):\/\/(.*)$/i);
   if (!schemeMatch) {
-    return { connectionString: uri, ssl: { rejectUnauthorized: false } };
+    return { 
+      connectionString: uri, 
+      ssl: { 
+        rejectUnauthorized: ca ? true : false,
+        ...(ca ? { ca } : {}),
+      } 
+    };
   }
 
   const body = schemeMatch[2];
@@ -65,9 +94,18 @@ export function parsePostgresConnectionString(rawUri: string | undefined): PoolC
 
   const isSupabase = host.includes('supabase.co') || host.includes('pooler.supabase.com') || (queryPart && queryPart.includes('sslmode=require'));
   
-  // Supabase connection poolers and cloud databases use intermediate/self-signed certificates in their chain.
-  // rejectUnauthorized must be false to avoid "self-signed certificate in certificate chain" errors in Node/Vercel.
-  const rejectUnauthorized = isSupabase ? false : process.env.DB_SSL_REJECT_UNAUTHORIZED === 'true';
+  // Security Policy:
+  // 1. If a Root CA certificate is provided (via SUPABASE_CA_CERT / DB_CA_CERT), strictly enforce CA verification (rejectUnauthorized: true).
+  // 2. If DB_SSL_REJECT_UNAUTHORIZED is explicitly 'true' without a CA cert, enforce strict mode.
+  // 3. Otherwise, for cloud/Supabase endpoints, enable TLS encryption in transit while avoiding self-signed chain rejection.
+  const rejectUnauthorized = ca ? true : (process.env.DB_SSL_REJECT_UNAUTHORIZED === 'true' && !isSupabase);
+
+  const sslConfig = isSupabase || process.env.NODE_ENV === 'production' || !!ca
+    ? {
+        rejectUnauthorized,
+        ...(ca ? { ca } : {}),
+      }
+    : false;
 
   return {
     user,
@@ -75,9 +113,7 @@ export function parsePostgresConnectionString(rawUri: string | undefined): PoolC
     host,
     port,
     database: database.split('?')[0] || 'postgres',
-    ssl: isSupabase || process.env.NODE_ENV === 'production'
-      ? { rejectUnauthorized }
-      : false,
+    ssl: sslConfig,
     max: 10,
     idleTimeoutMillis: 30000,
     connectionTimeoutMillis: 10000,
