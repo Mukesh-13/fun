@@ -23,7 +23,7 @@ export function parsePostgresConnectionString(rawUri: string | undefined): PoolC
 
   const schemeMatch = uri.match(/^(postgres(?:ql)?):\/\/(.*)$/i);
   if (!schemeMatch) {
-    return { connectionString: uri };
+    return { connectionString: uri, ssl: { rejectUnauthorized: false } };
   }
 
   const body = schemeMatch[2];
@@ -65,8 +65,9 @@ export function parsePostgresConnectionString(rawUri: string | undefined): PoolC
 
   const isSupabase = host.includes('supabase.co') || host.includes('pooler.supabase.com') || (queryPart && queryPart.includes('sslmode=require'));
   
-  // Default to false for Supabase certificates unless DB_SSL_REJECT_UNAUTHORIZED is explicitly 'true'
-  const rejectUnauthorized = process.env.DB_SSL_REJECT_UNAUTHORIZED === 'true';
+  // Supabase connection poolers and cloud databases use intermediate/self-signed certificates in their chain.
+  // rejectUnauthorized must be false to avoid "self-signed certificate in certificate chain" errors in Node/Vercel.
+  const rejectUnauthorized = isSupabase ? false : process.env.DB_SSL_REJECT_UNAUTHORIZED === 'true';
 
   return {
     user,
