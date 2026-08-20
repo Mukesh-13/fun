@@ -66,7 +66,7 @@ export function parsePostgresConnectionString(rawUri: string | undefined): PoolC
   const isSupabase = host.includes('supabase.co') || host.includes('pooler.supabase.com') || (queryPart && queryPart.includes('sslmode=require'));
   
   // Default to false for Supabase certificates unless DB_SSL_REJECT_UNAUTHORIZED is explicitly 'true'
-  let rejectUnauthorized = process.env.DB_SSL_REJECT_UNAUTHORIZED === 'true';
+  const rejectUnauthorized = process.env.DB_SSL_REJECT_UNAUTHORIZED === 'true';
 
   return {
     user,
