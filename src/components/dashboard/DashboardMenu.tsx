@@ -6,7 +6,7 @@ export default function DashboardMenu() {
     <div className="dashboard-menu">
       <h1 className="menu-title">Select an Application</h1>
       <div className="card-grid">
-        <Link href="/flashbacks" className="app-card">
+        <Link href="/thinking" className="app-card">
           <div className="card-icon">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
               <rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"/>
@@ -20,8 +20,9 @@ export default function DashboardMenu() {
             </svg>
           </div>
           <div className="card-content">
-            <h2 className="card-title">Flashbacks</h2>
-            <p className="card-desc">See how they think with interactive video thoughts.</p>
+            <h2 className="card-title">Thinking Fun</h2>
+            <p className="card-desc">How Thinking Works For Us</p>
+            <p className="card-desc">18th Nov 2026</p>
           </div>
         </Link>
         

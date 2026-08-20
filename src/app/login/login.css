@@ -43,16 +43,7 @@
   }
 }
 
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-
-body {
-  font-family: var(--font-sans);
-  background-color: var(--bg-space);
-  color: var(--foreground);
+.login-page-container {
   min-height: 100vh;
   display: flex;
   align-items: center;
@@ -311,7 +302,7 @@ form {
 }
 
 @media (max-width: 480px) {
-  body {
+  .login-page-container {
     padding: 16px;
   }
 }

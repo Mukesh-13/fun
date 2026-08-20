@@ -10,12 +10,12 @@ interface DashboardShellProps {
 
 export default function DashboardShell({ children, user }: DashboardShellProps) {
   return (
-    <>
+    <div className="dashboard-page-container">
       <StarfieldBackground />
       <DashboardHeader user={user} />
       <main className="main-viewport">
         {children}
       </main>
-    </>
+    </div>
   );
 }

@@ -2,7 +2,7 @@
 
 import { useState, useRef } from 'react';
 
-export default function FlashbacksView() {
+export default function ThinkingView() {
   const manVideoRef = useRef<HTMLVideoElement>(null);
   const womanVideoRef = useRef<HTMLVideoElement>(null);
   const [manPlaying, setManPlaying] = useState(false);
@@ -45,7 +45,7 @@ export default function FlashbacksView() {
           <div className="video-screen-wrapper" onClick={() => toggleVideoPlay(manVideoRef, manPlaying, setManPlaying)}>
             <video 
               ref={manVideoRef}
-              className="flashback-video" 
+              className="thinking-video" 
               playsInline
               preload="metadata"
               src="/api/media/Man_Video.mp4"
@@ -85,7 +85,7 @@ export default function FlashbacksView() {
           <div className="video-screen-wrapper" onClick={() => toggleVideoPlay(womanVideoRef, womanPlaying, setWomanPlaying)}>
             <video 
               ref={womanVideoRef}
-              className="flashback-video" 
+              className="thinking-video" 
               playsInline
               preload="metadata"
               src="/api/media/Woman_Video.mp4"

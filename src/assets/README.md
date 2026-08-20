@@ -1,16 +1,17 @@
 # 🎨 Custom Character & Video Assets Directory
 
-Place your character model images and flashback video files directly into this directory:
+Place your character model images and thinking video files directly into this directory:
 
-## 📁 Required Filenames:
+- **Man's Base Layer**: `Man_1.png`
+- **Woman's Base Layer**: `Woman_1.png`
 
-### Character Model Images:
-- **Man Character**: `Man.png`
-- **Woman Character**: `Woman.png`
+### Dynamic Interaction Images (Not Currently Used):
+- `Man_2.png` to `Man_7.png`
+- `Woman_2.png` to `Woman_7.png`
 
-### Flashback Story Videos:
-- **Man's Flashback Video**: `Man_Video.mp4`
-- **Woman's Flashback Video**: `Woman_Video.mp4`
+### Thinking Story Videos:
+- **Man's Thinking Video**: `Man_Video.mp4`
+- **Woman's Thinking Video**: `Woman_Video.mp4`
 
 ---
 
