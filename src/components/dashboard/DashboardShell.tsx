@@ -1,0 +1,21 @@
+import React from 'react';
+import StarfieldBackground from './StarfieldBackground';
+import DashboardHeader from './DashboardHeader';
+import '../../app/dashboard.css';
+
+interface DashboardShellProps {
+  children: React.ReactNode;
+  user: { username: string; role: string };
+}
+
+export default function DashboardShell({ children, user }: DashboardShellProps) {
+  return (
+    <>
+      <StarfieldBackground />
+      <DashboardHeader user={user} />
+      <main className="main-viewport">
+        {children}
+      </main>
+    </>
+  );
+}

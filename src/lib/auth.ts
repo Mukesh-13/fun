@@ -1,17 +1,9 @@
 import bcrypt from 'bcryptjs';
 import * as jose from 'jose';
 import { query } from './db';
+import { getJwtSecret } from './auth-edge';
 
 const BCRYPT_SALT_ROUNDS = 12;
-
-export function getJwtSecret(): Uint8Array {
-  const secret = process.env.JWT_SECRET;
-  if (!secret) {
-    throw new Error('JWT_SECRET environment variable is not defined.');
-  }
-  return new TextEncoder().encode(secret);
-}
-
 export async function hashPassword(plainPassword: string, customSalt = '') {
   const salt = await bcrypt.genSalt(BCRYPT_SALT_ROUNDS);
   const hash = await bcrypt.hash(plainPassword + customSalt, salt);
