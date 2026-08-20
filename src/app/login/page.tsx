@@ -133,10 +133,8 @@ export default function LoginPage() {
       <main className="auth-card">
         <header className="auth-header">
           <div className="brand-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
-              <path d="M12 11a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"/>
-              <path d="M12 15v2"/>
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 2L2 22h20L12 2z"/>
             </svg>
           </div>
           <h1>Login</h1>
