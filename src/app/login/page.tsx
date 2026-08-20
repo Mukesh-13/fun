@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import { generateDeviceFingerprint } from '@/lib/fingerprint';
+import StarfieldBackground from '@/components/dashboard/StarfieldBackground';
 import './login.css';
 
 export default function LoginPage() {
@@ -129,16 +130,12 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="auth-wrapper">
-      <main className="auth-card">
+    <>
+      <StarfieldBackground />
+      <div className="auth-wrapper">
+        <main className="auth-card">
         <header className="auth-header">
-          <div className="brand-icon">
-            <svg viewBox="0 0 24 24" fill="currentColor">
-              <path d="M12 2L2 22h20L12 2z"/>
-            </svg>
-          </div>
           <h1>Login</h1>
-          <p>Enter your credentials to continue</p>
         </header>
 
           {alertInfo && (
@@ -218,5 +215,6 @@ export default function LoginPage() {
         </form>
       </main>
     </div>
+    </>
   );
 }

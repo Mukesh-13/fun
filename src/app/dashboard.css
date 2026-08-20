@@ -66,22 +66,20 @@ html, body {
   align-items: center;
   gap: 4px;
   padding: 8px 12px;
-  background: var(--bg-glass);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid var(--border-glass);
-  border-radius: 50px;
+  background: #09090b;
+  border: 1px solid #27272a;
+  border-radius: 8px;
   color: var(--text-primary);
   text-decoration: none;
   font-size: 0.85rem;
   font-weight: 500;
-  transition: all 0.25s ease;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
 
 .btn-home:hover {
-  background: rgba(255, 255, 255, 0.1);
-  border-color: rgba(255, 255, 255, 0.2);
+  background: #18181b;
+  border-color: #3f3f46;
 }
 
 .btn-home svg {
@@ -116,15 +114,13 @@ html, body {
   align-items: center;
   gap: 8px;
   padding: 8px 16px;
-  background: var(--bg-glass);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid var(--border-glass);
-  border-radius: 50px;
+  background: #09090b;
+  border: 1px solid #27272a;
+  border-radius: 8px;
   font-size: 0.875rem;
   font-weight: 500;
   letter-spacing: -0.2px;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
 
 .status-pulse {
@@ -158,18 +154,16 @@ html, body {
   align-items: center;
   gap: 6px;
   padding: 8px 14px;
-  background: var(--bg-glass);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid var(--border-glass);
-  border-radius: 50px;
+  background: #09090b;
+  border: 1px solid #27272a;
+  border-radius: 8px;
   color: var(--text-secondary);
   font-family: var(--font-sans);
   font-size: 0.85rem;
   font-weight: 500;
   cursor: pointer;
-  transition: all 0.25s ease;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
 
 .btn-signout svg {
@@ -180,9 +174,9 @@ html, body {
 
 .btn-signout:hover {
   color: #fca5a5;
-  background: rgba(239, 68, 68, 0.15);
-  border-color: rgba(239, 68, 68, 0.35);
-  box-shadow: 0 8px 32px rgba(239, 68, 68, 0.2);
+  background: #271313;
+  border-color: #5f1f1f;
+  box-shadow: 0 4px 12px rgba(239, 68, 68, 0.2);
 }
 
 .btn-signout:hover svg {
@@ -684,11 +678,10 @@ html, body {
 
 .menu-title {
   color: #fff;
-  font-size: 2rem;
+  font-size: 2.25rem;
+  font-weight: 700;
+  letter-spacing: -0.025em;
   margin-bottom: 3rem;
-  text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
-  font-weight: 300;
-  letter-spacing: 2px;
 }
 
 .card-grid {
@@ -700,26 +693,25 @@ html, body {
 }
 
 .app-card {
-  background: rgba(15, 23, 42, 0.6);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 16px;
+  background: #09090b;
+  border: 1px solid #27272a;
+  border-bottom-width: 4px;
+  border-radius: 12px;
   padding: 2rem;
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
   text-decoration: none;
-  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
 }
 
 .app-card:hover {
-  transform: translateY(-5px);
-  background: rgba(30, 41, 59, 0.7);
-  border-color: rgba(56, 189, 248, 0.4);
-  box-shadow: 0 10px 40px rgba(56, 189, 248, 0.15);
+  transform: translateY(-4px);
+  background: #111113;
+  border-color: #38bdf8;
+  box-shadow: 0 15px 35px -10px rgba(56, 189, 248, 0.15);
 }
 
 .app-card.placeholder {
@@ -729,9 +721,9 @@ html, body {
 
 .app-card.placeholder:hover {
   transform: none;
-  background: rgba(15, 23, 42, 0.6);
-  border-color: rgba(255, 255, 255, 0.1);
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  background: #09090b;
+  border-color: #27272a;
+  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
 }
 
 .card-icon {
