@@ -42,15 +42,34 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ success: false, error: 'Invalid username or password.' }, { status: 400 });
     }
 
+    const cleanUsername = username.toLowerCase().trim();
+    const userKey = `user_${cleanUsername}`;
+    const userStatus = rateLimitCache.checkLimit(userKey, maxAttempts, windowMs);
+    if (userStatus.limited) {
+      return NextResponse.json({
+        success: false,
+        error: `Too many failed attempts for this account. Access temporarily locked for ${Math.ceil(userStatus.retryAfterSec / 60)} minute(s).`,
+        retryAfterSeconds: userStatus.retryAfterSec,
+      }, { status: 429 });
+    }
+
     const authResult = await authenticateUser(username, password, ip);
 
     if (!authResult.success) {
       rateLimitCache.recordAttempt(compositeKey, maxAttempts, windowMs);
       rateLimitCache.recordAttempt(ipKey, ipBurstMax, windowMs);
-      return NextResponse.json({ success: false, error: authResult.message }, { status: 401 });
+      rateLimitCache.recordAttempt(userKey, maxAttempts, windowMs);
+      
+      const statusCode = (authResult as { locked?: boolean }).locked ? 429 : 401;
+      return NextResponse.json({
+        success: false,
+        error: authResult.message,
+        retryAfterSeconds: (authResult as { retryAfterSeconds?: number }).retryAfterSeconds || 60,
+      }, { status: statusCode });
     }
 
     rateLimitCache.reset(compositeKey);
+    rateLimitCache.reset(userKey);
 
     const token = await generateSessionToken(authResult.user!);
 

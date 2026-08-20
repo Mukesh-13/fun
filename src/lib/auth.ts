@@ -70,18 +70,42 @@ export async function authenticateUser(username: string, password: string, clien
 
   if (user.locked_until && new Date(user.locked_until) > new Date()) {
     await bcrypt.compare(password, '$2a$12$e876H7fW33jA8aGsmP6s..w41eF5Kx4kGfV7R7p6e7Q6Wv5C2V4p6');
-    return { success: false, message: 'Invalid username or password.' };
+    const remainingSeconds = Math.max(1, Math.ceil((new Date(user.locked_until).getTime() - Date.now()) / 1000));
+    return {
+      success: false,
+      message: `Account is temporarily locked due to multiple failed login attempts. Please wait ${Math.ceil(remainingSeconds / 60)} minute(s).`,
+      locked: true,
+      retryAfterSeconds: remainingSeconds,
+    };
   }
 
   const isValid = await verifyPassword(password, user.password_hash, user.salt);
 
   if (!isValid) {
+    const maxAttempts = parseInt(process.env.RATE_LIMIT_MAX_ATTEMPTS || '5', 10);
+    const nextAttempts = (user.failed_login_attempts || 0) + 1;
+
     try {
-      await query(
-        `UPDATE public.users SET failed_login_attempts = COALESCE(failed_login_attempts, 0) + 1 WHERE id = $1`,
-        [user.id]
-      );
-    } catch {}
+      if (nextAttempts >= maxAttempts) {
+        await query(
+          `UPDATE public.users SET failed_login_attempts = $1, locked_until = NOW() + INTERVAL '15 minutes' WHERE id = $2`,
+          [nextAttempts, user.id]
+        );
+        return {
+          success: false,
+          message: 'Too many failed login attempts. Account temporarily locked for 15 minutes.',
+          locked: true,
+          retryAfterSeconds: 900,
+        };
+      } else {
+        await query(
+          `UPDATE public.users SET failed_login_attempts = $1 WHERE id = $2`,
+          [nextAttempts, user.id]
+        );
+      }
+    } catch (err: unknown) {
+      console.warn('⚠️ [Auth Service] Could not update failed attempt count:', err instanceof Error ? err.message : err);
+    }
     return { success: false, message: 'Invalid username or password.' };
   }
 

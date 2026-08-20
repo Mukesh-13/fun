@@ -1,7 +1,5 @@
 import { Pool, PoolConfig } from 'pg';
 
-let pool: Pool | null = null;
-
 function safeDecode(val: string): string {
   if (!val) return '';
   try {
@@ -67,15 +65,8 @@ export function parsePostgresConnectionString(rawUri: string | undefined): PoolC
 
   const isSupabase = host.includes('supabase.co') || host.includes('pooler.supabase.com') || (queryPart && queryPart.includes('sslmode=require'));
   
-  // Strict SSL in production, bypass in development for local connections
-  let rejectUnauthorized = process.env.NODE_ENV === 'production';
-  
-  // Allow explicit override via environment variable
-  if (process.env.DB_SSL_REJECT_UNAUTHORIZED === 'false') {
-    rejectUnauthorized = false;
-  } else if (process.env.DB_SSL_REJECT_UNAUTHORIZED === 'true') {
-    rejectUnauthorized = true;
-  }
+  // Default to false for Supabase certificates unless DB_SSL_REJECT_UNAUTHORIZED is explicitly 'true'
+  let rejectUnauthorized = process.env.DB_SSL_REJECT_UNAUTHORIZED === 'true';
 
   return {
     user,
@@ -92,8 +83,12 @@ export function parsePostgresConnectionString(rawUri: string | undefined): PoolC
   };
 }
 
+const globalForDb = globalThis as unknown as {
+  pgPool?: Pool;
+};
+
 export function getPool(): Pool | null {
-  if (!pool) {
+  if (!globalForDb.pgPool) {
     const connectionString = process.env.DATABASE_URL;
 
     if (!connectionString || !connectionString.trim()) {
@@ -108,17 +103,23 @@ export function getPool(): Pool | null {
         return null;
       }
 
-      pool = new Pool(poolConfig);
+      const pool = new Pool({
+        ...poolConfig,
+        max: process.env.NODE_ENV === 'production' ? 5 : 10,
+        allowExitOnIdle: true,
+      });
 
       pool.on('error', (err) => {
         console.error('❌ [Database Pool Background Error]:', err.message);
       });
+
+      globalForDb.pgPool = pool;
     } catch (err: unknown) {
       console.error('❌ [Database Pool Init Error]:', err instanceof Error ? err.message : err);
       return null;
     }
   }
-  return pool;
+  return globalForDb.pgPool;
 }
 
 export async function query(text: string, params: unknown[] = []) {

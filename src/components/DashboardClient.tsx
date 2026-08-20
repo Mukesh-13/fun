@@ -311,6 +311,7 @@ export default function DashboardClient({ user }: { user: { username: string, ro
               <div className="thought-connector-3"></div>
             </div>
             <div className="character-figure man-figure">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
               <img src="/api/media/Man.png" alt="Man" className="custom-character-img" />
             </div>
             <div className="character-name">How he thinks</div>
@@ -350,6 +351,7 @@ export default function DashboardClient({ user }: { user: { username: string, ro
               <div className="thought-connector-3"></div>
             </div>
             <div className="character-figure woman-figure">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
               <img src="/api/media/Woman.png" alt="Woman" className="custom-character-img" />
             </div>
             <div className="character-name">How she thinks</div>
