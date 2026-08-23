@@ -49,3 +49,50 @@ a {
     color-scheme: dark;
   }
 }
+
+/* ============================================================
+   Universal Animated Conic Border Beam (Glitch-Free GPU Rotation)
+   ============================================================ */
+
+.border-beam-container {
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  overflow: hidden;
+  padding: var(--border-width, 1.5px);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  z-index: 2;
+}
+
+.border-beam-container::before {
+  content: "";
+  position: absolute;
+  top: -100%;
+  left: -100%;
+  width: 300%;
+  height: 300%;
+  background: conic-gradient(
+    from 0deg at 50% 50%,
+    transparent 0deg 300deg,
+    var(--color-from, #38bdf8) 335deg,
+    var(--color-to, #c026d3) 360deg
+  );
+  animation: borderBeamRotate var(--duration, 8s) linear infinite;
+  animation-delay: var(--delay, 0s);
+  will-change: transform;
+}
+
+@keyframes borderBeamRotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+

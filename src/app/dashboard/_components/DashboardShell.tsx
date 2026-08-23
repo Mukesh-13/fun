@@ -1,7 +1,6 @@
 import React from 'react';
-import StarfieldBackground from './StarfieldBackground';
+import StarfieldBackground from '@/components/ui/StarfieldBackground';
 import DashboardHeader from './DashboardHeader';
-import '../../app/dashboard.css';
 
 interface DashboardShellProps {
   children: React.ReactNode;
@@ -19,3 +18,4 @@ export default function DashboardShell({ children, user }: DashboardShellProps) 
     </div>
   );
 }
+

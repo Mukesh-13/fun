@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useRef } from 'react';
+import { motion } from 'motion/react';
 
 export default function ThinkingView() {
   const manVideoRef = useRef<HTMLVideoElement>(null);
@@ -39,9 +40,19 @@ export default function ThinkingView() {
   };
 
   return (
-    <div className="characters-stage">
-      <div className="character-card man-card">
-        <div className="thought-bubble man-thought">
+    <motion.div
+      initial={{ opacity: 0, scale: 0.96 }}
+      animate={{ opacity: 1, scale: 1 }}
+      transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+      className="characters-stage"
+    >
+      <motion.div
+        initial={{ opacity: 0, x: -30 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ duration: 0.6, delay: 0.1 }}
+        className="character-card man-card"
+      >
+        <div className={`thought-bubble man-thought ${manPlaying ? 'is-active-glow' : ''}`}>
           <div className="video-screen-wrapper" onClick={() => toggleVideoPlay(manVideoRef, manPlaying, setManPlaying)}>
             <video 
               ref={manVideoRef}
@@ -54,8 +65,10 @@ export default function ThinkingView() {
               onEnded={() => setManPlaying(false)}
             ></video>
             <span className="time-remaining">{manTime}</span>
-            <button 
+            <motion.button 
               type="button" 
+              whileHover={{ scale: 1.12 }}
+              whileTap={{ scale: 0.9 }}
               className={`video-toggle-btn ${manPlaying ? 'is-playing' : ''}`}
             >
               {manPlaying ? (
@@ -67,7 +80,7 @@ export default function ThinkingView() {
                   <path d="M8 5v14l11-7z"/>
                 </svg>
               )}
-            </button>
+            </motion.button>
           </div>
           <div className="thought-connector-1"></div>
           <div className="thought-connector-2"></div>
@@ -78,10 +91,15 @@ export default function ThinkingView() {
           <img src="/api/media/Man.png" alt="Man" className="custom-character-img" />
         </div>
         <div className="character-name">How he thinks</div>
-      </div>
+      </motion.div>
 
-      <div className="character-card woman-card">
-        <div className="thought-bubble woman-thought">
+      <motion.div
+        initial={{ opacity: 0, x: 30 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ duration: 0.6, delay: 0.2 }}
+        className="character-card woman-card"
+      >
+        <div className={`thought-bubble woman-thought ${womanPlaying ? 'is-active-glow' : ''}`}>
           <div className="video-screen-wrapper" onClick={() => toggleVideoPlay(womanVideoRef, womanPlaying, setWomanPlaying)}>
             <video 
               ref={womanVideoRef}
@@ -94,8 +112,10 @@ export default function ThinkingView() {
               onEnded={() => setWomanPlaying(false)}
             ></video>
             <span className="time-remaining">{womanTime}</span>
-            <button 
+            <motion.button 
               type="button" 
+              whileHover={{ scale: 1.12 }}
+              whileTap={{ scale: 0.9 }}
               className={`video-toggle-btn ${womanPlaying ? 'is-playing' : ''}`}
             >
               {womanPlaying ? (
@@ -107,7 +127,7 @@ export default function ThinkingView() {
                   <path d="M8 5v14l11-7z"/>
                 </svg>
               )}
-            </button>
+            </motion.button>
           </div>
           <div className="thought-connector-1"></div>
           <div className="thought-connector-2"></div>
@@ -118,7 +138,8 @@ export default function ThinkingView() {
           <img src="/api/media/Woman.png" alt="Woman" className="custom-character-img" />
         </div>
         <div className="character-name">How she thinks</div>
-      </div>
-    </div>
+      </motion.div>
+    </motion.div>
   );
 }
+

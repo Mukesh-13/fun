@@ -2,19 +2,27 @@ import { NextRequest, NextResponse } from 'next/server';
 import { authenticateUser, generateSessionToken } from '@/lib/auth';
 import { rateLimitCache, getClientIp } from '@/lib/rateLimiter';
 import { cookies } from 'next/headers';
+import crypto from 'crypto';
 
 export async function POST(request: NextRequest) {
   try {
     const ip = getClientIp(request);
     const body = await request.json();
     const { username, password, deviceFingerprint } = body;
-    const deviceId = deviceFingerprint || request.headers.get('x-device-fingerprint') || 'unknown';
+    
+    // Construct robust server-derived device signature
+    const userAgent = request.headers.get('user-agent') || 'unknown_ua';
+    const acceptLang = request.headers.get('accept-language') || 'unknown_lang';
+    const rawClientFp = (typeof deviceFingerprint === 'string' ? deviceFingerprint : request.headers.get('x-device-fingerprint') || '').slice(0, 128);
+    
+    const serverFpSource = `${ip}::${userAgent.slice(0, 150)}::${acceptLang.slice(0, 50)}::${rawClientFp}`;
+    const serverFingerprint = crypto.createHash('sha256').update(serverFpSource).digest('hex').slice(0, 32);
 
     const windowMs = parseInt(process.env.RATE_LIMIT_WINDOW_MS || '900000', 10);
     const maxAttempts = parseInt(process.env.RATE_LIMIT_MAX_ATTEMPTS || '5', 10);
     const ipBurstMax = parseInt(process.env.IP_BURST_MAX_ATTEMPTS || '15', 10);
 
-    const compositeKey = `login_${ip}_${deviceId}`;
+    const compositeKey = `login_${ip}_${serverFingerprint}`;
     const ipKey = `ip_${ip}`;
 
     const compositeStatus = rateLimitCache.checkLimit(compositeKey, maxAttempts, windowMs);

@@ -7,7 +7,7 @@ export async function proxy(request: NextRequest) {
   const path = request.nextUrl.pathname;
 
   // Paths that are public
-  const isPublicPath = path === '/login' || path === '/api/auth/login';
+  const isPublicPath = path === '/login' || path === '/api/auth/login' || path === '/api/auth/logout';
 
   let isValidSession = false;
   let userPayload: (jose.JWTPayload & { role?: string }) | null = null;
