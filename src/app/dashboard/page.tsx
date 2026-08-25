@@ -1,6 +1,6 @@
 import { cookies } from 'next/headers';
-import { verifySessionToken } from '@/lib/auth';
-import DashboardMenu from './_components/DashboardMenu';
+import { verifySessionToken } from '@/core/_lib/auth';
+import DashboardMenu from '@/modules/dashboard/_components/DashboardMenu';
 
 export const metadata = {
   title: 'Dashboard | Select App',

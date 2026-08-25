@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import fs from 'fs';
 import path from 'path';
 import { cookies } from 'next/headers';
-import { verifySessionToken } from '@/lib/auth';
+import { verifySessionToken } from '@/core/_lib/auth';
 
 function getMimeType(filePath: string): string {
   const ext = path.extname(filePath).toLowerCase();
@@ -44,7 +44,7 @@ export async function GET(_request: NextRequest, { params }: { params: Promise<{
 
   const filename = file.join('/');
   
-  const baseDir = path.resolve(process.cwd(), 'src', 'assets');
+  const baseDir = path.resolve(process.cwd(), 'src', 'modules', 'core', '_assets');
   const resolvedPath = path.resolve(baseDir, filename);
 
   // Prevent path traversal attacks

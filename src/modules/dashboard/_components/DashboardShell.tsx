@@ -1,5 +1,5 @@
 import React from 'react';
-import StarfieldBackground from '@/components/ui/StarfieldBackground';
+import StarfieldBackground from '@/core/_components/StarfieldBackground';
 import DashboardHeader from './DashboardHeader';
 
 interface DashboardShellProps {

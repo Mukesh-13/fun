@@ -5,8 +5,8 @@ import Link from 'next/link';
 import { motion, AnimatePresence } from 'motion/react';
 import BentoWelcomeHeader from './bento/BentoWelcomeHeader';
 import BentoSearchFilter from './bento/BentoSearchFilter';
-import MagneticCard from '@/components/ui/MagneticCard';
-import BorderBeam from '@/components/ui/BorderBeam';
+import MagneticCard from '@/core/_components/MagneticCard';
+import BorderBeam from '@/core/_components/BorderBeam';
 import DashboardPet from './DashboardPet';
 
 interface DashboardMenuProps {
@@ -28,6 +28,13 @@ const placeholderModules: CardItem[] = [
     desc: 'How thinking works for us',
     date: '18-08-2026',
     href: '/dashboard/thinking',
+  },
+  {
+    id: 'dress-nighty',
+    title: 'Dress : Nighty',
+    desc: 'When you wear nighty',
+    date: '25-08-2026',
+    href: '/dashboard/dress-nighty',
   },
 ];
 
@@ -163,10 +170,7 @@ export default function DashboardMenu({ username = 'User' }: DashboardMenuProps)
                           colorTo="#c026d3"
                         />
                         <div className="hero-compact-top">
-                          <div className="badge-date-pill">
-                            <span className="badge-dot"></span>
-                            <span>{item.date}</span>
-                          </div>
+                          <span className="hero-compact-date">{item.date}</span>
                           <div className="hero-compact-arrow">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                               <line x1="7" y1="17" x2="17" y2="7"></line>

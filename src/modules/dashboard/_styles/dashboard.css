@@ -780,47 +780,45 @@
   -webkit-text-fill-color: transparent;
 }
 
-.welcome-meta-capsules {
+.welcome-meta-display {
   display: flex;
   align-items: center;
   gap: 6px;
   flex-shrink: 0;
 }
 
-.welcome-status-pill {
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
-  padding: 3px 8px;
-  background: rgba(16, 185, 129, 0.08);
-  border: 1px solid rgba(16, 185, 129, 0.25);
-  border-radius: 100px;
-  font-size: 0.68rem;
-  font-weight: 600;
-  color: #34d399;
-  letter-spacing: 0.3px;
-}
-
-.welcome-date-capsule {
+.welcome-date-clean {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  padding: 3px 8px;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 100px;
-  font-size: 0.68rem;
-  font-weight: 600;
-  color: #cbd5e1;
-  letter-spacing: 0.5px;
+  font-size: 0.72rem;
+  font-weight: 500;
+  color: #94a3b8;
+  letter-spacing: 0.2px;
   white-space: nowrap;
   flex-shrink: 0;
 }
 
-.capsule-icon {
-  width: 11px;
-  height: 11px;
+.welcome-date-clean .live-clock-text {
+  color: #f1f5f9;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.welcome-date-clean .live-date-divider {
+  color: rgba(255, 255, 255, 0.2);
+  font-size: 0.65rem;
+}
+
+.welcome-date-clean .live-date-text {
+  color: #94a3b8;
+}
+
+.date-icon-clean {
+  width: 12px;
+  height: 12px;
   color: #38bdf8;
+  opacity: 0.85;
 }
 
 .live-pulse-dot {
@@ -1495,26 +1493,13 @@
   margin-bottom: 4px;
 }
 
-.badge-date-pill {
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  padding: 2px 6px;
-  background: rgba(56, 189, 248, 0.1);
-  border: 1px solid rgba(56, 189, 248, 0.25);
-  border-radius: 100px;
-  font-size: 0.62rem;
-  font-weight: 700;
-  letter-spacing: 0.3px;
+.hero-compact-date {
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.4px;
   color: #38bdf8;
-}
-
-.badge-date-pill .badge-dot {
-  width: 4px;
-  height: 4px;
-  border-radius: 50%;
-  background: #38bdf8;
-  box-shadow: 0 0 6px #38bdf8;
+  opacity: 0.9;
+  font-variant-numeric: tabular-nums;
 }
 
 .hero-compact-arrow {
@@ -1628,9 +1613,8 @@
     font-size: 1.35rem;
   }
 
-  .welcome-date-capsule {
+  .welcome-date-clean {
     font-size: 0.78rem;
-    padding: 4px 10px;
   }
 
   .bento-search-filter-bar {
@@ -1720,8 +1704,8 @@
   position: fixed;
   top: 0;
   left: 0;
-  width: 52px;
-  height: 52px;
+  width: 58px;
+  height: 58px;
   z-index: 9999;
   cursor: pointer;
   display: flex;
@@ -1855,17 +1839,16 @@
 
 
 .astro-character-wrap {
-  width: 52px;
-  height: 52px;
+  width: 58px;
+  height: 58px;
   position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
   transform-origin: center bottom;
-  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-  filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.6));
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.65));
 }
-
 
 .astro-svg {
   width: 100%;
@@ -1873,39 +1856,79 @@
   overflow: visible;
 }
 
-/* 1. Antenna Beacon Blinking */
-.astro-antenna-beacon {
-  animation: antennaPulse 1.4s infinite ease-in-out;
+/* 1. Cute Star Beacon Twinkle */
+.chibi-star-beacon {
+  animation: starBeaconTwinkle 2.2s infinite ease-in-out;
 }
 
-@keyframes antennaPulse {
+@keyframes starBeaconTwinkle {
   0%, 100% {
-    fill: #38bdf8;
-    filter: drop-shadow(0 0 2px #38bdf8);
+    transform: scale(1);
+    opacity: 0.9;
+    filter: drop-shadow(0 0 3px #facc15);
   }
   50% {
-    fill: #ec4899;
-    filter: drop-shadow(0 0 8px #ec4899);
+    transform: scale(1.18);
+    opacity: 1;
+    filter: drop-shadow(0 0 8px #fef08a);
   }
 }
 
-/* 2. Visor Reflection Glint Movement */
-.astro-visor-glint {
+/* 2. Cute Glowing Cyber Eye Blink */
+.chibi-eye {
+  transform-origin: center;
+  animation: eyeBlinkAnim 3.8s infinite ease-in-out;
+}
+
+@keyframes eyeBlinkAnim {
+  0%, 92%, 100% {
+    transform: scaleY(1);
+    opacity: 1;
+  }
+  95% {
+    transform: scaleY(0.08);
+    opacity: 0.7;
+  }
+}
+
+/* 3. Rosy Cheek Blush Shimmer */
+.chibi-blush {
+  animation: blushGlow 2.8s infinite alternate ease-in-out;
+}
+
+@keyframes blushGlow {
+  0% { opacity: 0.5; }
+  100% { opacity: 0.85; filter: drop-shadow(0 0 3px #f43f5e); }
+}
+
+/* 4. Cute Chest Heart Pulse */
+.chibi-chest-heart {
+  transform-origin: 36px 44px;
+  animation: heartPulse 1.6s infinite ease-in-out;
+}
+
+@keyframes heartPulse {
+  0%, 100% { transform: scale(1); opacity: 0.85; }
+  50% { transform: scale(1.15); opacity: 1; filter: drop-shadow(0 0 4px #f43f5e); }
+}
+
+/* 5. Visor Reflection Glint Movement */
+.chibi-glint {
   animation: visorGlintAnim 3s infinite ease-in-out;
 }
 
 @keyframes visorGlintAnim {
   0%, 100% {
     transform: translate(0, 0);
-    opacity: 0.8;
+    opacity: 0.9;
   }
   50% {
-    transform: translate(3px, 1px);
-    opacity: 0.3;
+    transform: translate(2px, 1px);
+    opacity: 0.5;
   }
 }
 
-/* 3. Integrated SVG Jetpack Plasma Thruster Animations */
+/* 6. Integrated Cute Plasma Thruster Animations */
 .svg-flame-core {
   transform-origin: 0 0;
   animation: svgThrusterCore 0.12s infinite alternate ease-in-out;
@@ -1944,104 +1967,116 @@
   100% { transform: translate(3px, 14px) scale(0.2); opacity: 0; }
 }
 
-
-/* 4. Idle Zero-G Float */
+/* 7. Cute Grounded Stance Idle Animation */
 .astro-character-wrap.state-idle {
-  animation: astroZeroGFloat 2.6s infinite ease-in-out;
+  animation: chibiGroundedBreath 2.6s infinite ease-in-out;
 }
 
-.astro-character-wrap.state-idle .astro-head {
-  animation: astroHeadBob 2.6s infinite ease-in-out;
+.astro-character-wrap.state-idle .chibi-head {
+  transform-box: fill-box;
+  transform-origin: 50% 85%;
+  animation: chibiHeadTilt 2.6s infinite ease-in-out;
 }
 
 .astro-character-wrap.state-idle .astro-arm-right {
-  transform-origin: 39px 24px;
-  animation: astroIdleWave 3s infinite ease-in-out;
+  transform-box: fill-box;
+  transform-origin: 50% 10%;
+  animation: chibiCuteWave 2.2s infinite ease-in-out;
 }
 
-@keyframes astroZeroGFloat {
+@keyframes chibiGroundedBreath {
   0%, 100% {
-    transform: translateY(0) rotate(0deg);
+    transform: translateY(0) scaleY(1);
   }
   50% {
-    transform: translateY(-6px) rotate(4deg);
+    transform: translateY(0) scaleY(1.02) scaleX(0.99);
   }
 }
 
-@keyframes astroHeadBob {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-1.5px); }
-}
-
-@keyframes astroIdleWave {
+@keyframes chibiHeadTilt {
   0%, 100% { transform: rotate(0deg); }
-  50% { transform: rotate(-10deg); }
+  50% { transform: rotate(-4deg); }
 }
 
-/* 5. Walking Cycle */
+@keyframes chibiCuteWave {
+  0%, 100% { transform: rotate(0deg); }
+  25% { transform: rotate(-25deg); }
+  50% { transform: rotate(-10deg); }
+  75% { transform: rotate(-25deg); }
+}
+
+/* 8. Cheerful Waddling Walk Cycle */
 .astro-character-wrap.state-walking {
-  animation: astroWalkBob 0.35s infinite alternate ease-in-out;
+  animation: chibiWaddleBob 0.28s infinite alternate ease-in-out;
+}
+
+.astro-character-wrap.state-walking .chibi-head {
+  transform-box: fill-box;
+  transform-origin: 50% 85%;
+  animation: chibiWaddleHead 0.28s infinite alternate ease-in-out;
 }
 
 .astro-character-wrap.state-walking .astro-leg-left {
-  transform-origin: 26px 40px;
-  animation: astroWalkLegL 0.35s infinite alternate ease-in-out;
+  transform-box: fill-box;
+  transform-origin: 50% 10%;
+  animation: chibiWaddleLegL 0.28s infinite alternate ease-in-out;
 }
 
 .astro-character-wrap.state-walking .astro-leg-right {
-  transform-origin: 37px 40px;
-  animation: astroWalkLegR 0.35s infinite alternate ease-in-out;
+  transform-box: fill-box;
+  transform-origin: 50% 10%;
+  animation: chibiWaddleLegR 0.28s infinite alternate ease-in-out;
 }
 
 .astro-character-wrap.state-walking .astro-arm-left {
-  transform-origin: 21px 24px;
-  animation: astroWalkArmL 0.35s infinite alternate ease-in-out;
+  transform-box: fill-box;
+  transform-origin: 50% 10%;
+  animation: chibiWaddleArmL 0.28s infinite alternate ease-in-out;
 }
 
 .astro-character-wrap.state-walking .astro-arm-right {
-  transform-origin: 42px 24px;
-  animation: astroWalkArmR 0.35s infinite alternate ease-in-out;
+  transform-box: fill-box;
+  transform-origin: 50% 10%;
+  animation: chibiWaddleArmR 0.28s infinite alternate ease-in-out;
 }
 
-@keyframes astroWalkBob {
-  0% { transform: translateY(0); }
-  100% { transform: translateY(-3px); }
+@keyframes chibiWaddleBob {
+  0% { transform: translateY(0) rotate(-4deg); }
+  100% { transform: translateY(-3.5px) rotate(4deg); }
 }
 
-@keyframes astroWalkLegL {
-  0% { transform: rotate(-24deg); }
-  100% { transform: rotate(24deg); }
+@keyframes chibiWaddleHead {
+  0% { transform: rotate(-3deg); }
+  100% { transform: rotate(3deg); }
 }
 
-@keyframes astroWalkLegR {
+@keyframes chibiWaddleLegL {
+  0% { transform: rotate(-26deg); }
+  100% { transform: rotate(26deg); }
+}
+
+@keyframes chibiWaddleLegR {
+  0% { transform: rotate(26deg); }
+  100% { transform: rotate(-26deg); }
+}
+
+@keyframes chibiWaddleArmL {
   0% { transform: rotate(24deg); }
   100% { transform: rotate(-24deg); }
 }
 
-@keyframes astroWalkArmL {
-  0% { transform: rotate(22deg); }
-  100% { transform: rotate(-22deg); }
+@keyframes chibiWaddleArmR {
+  0% { transform: rotate(-24deg); }
+  100% { transform: rotate(24deg); }
 }
 
-@keyframes astroWalkArmR {
-  0% { transform: rotate(-22deg); }
-  100% { transform: rotate(22deg); }
-}
-
-/* 6. Jumping / Thrusting Pose */
+/* 9. Cute Propulsion & Falling Poses */
 .astro-character-wrap.state-jumping {
-  transform: rotate(-12deg) scaleY(1.08) scaleX(0.94);
+  transform: rotate(-10deg) scale(1.05);
 }
 
-/* 7. Falling Pose */
 .astro-character-wrap.state-falling {
-  transform: rotate(8deg) scaleY(0.96) scaleX(1.04);
-}
-
-
-@keyframes petIdle {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.05) translateY(-2px); }
+  transform: rotate(6deg) scale(0.98);
 }
 
 /* ============================================================
@@ -2109,28 +2144,287 @@
 }
 
 
-/* Interactive Particle Bursts */
-.pet-sparkle-burst {
-  position: fixed;
-  pointer-events: none;
-  font-size: 16px;
-  z-index: 10000;
-  animation: sparkleBurst 0.85s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-  filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.8));
+/* 8. Backpack Status LED */
+.astro-backpack-led {
+  animation: backpackLedPulse 1.8s infinite alternate ease-in-out;
 }
 
-@keyframes sparkleBurst {
+@keyframes backpackLedPulse {
+  0% { fill: #10b981; filter: drop-shadow(0 0 1px #10b981); opacity: 0.7; }
+  100% { fill: #34d399; filter: drop-shadow(0 0 6px #10b981); opacity: 1; }
+}
+
+
+/* ============================================================
+   Real-Time Plasma Ion Thruster Exhaust Plume Particles
+   ============================================================ */
+.plasma-exhaust-particle {
+  position: fixed;
+  pointer-events: none;
+  border-radius: 50%;
+  z-index: 9997;
+  will-change: transform, opacity;
+}
+
+.plasma-exhaust-particle.particle-core {
+  animation: plasmaCoreDischarge 0.45s cubic-bezier(0.1, 0.9, 0.2, 1) forwards;
+  filter: blur(0.5px);
+}
+
+.plasma-exhaust-particle.particle-vapor {
+  animation: plasmaVaporExpand 0.75s ease-out forwards;
+  filter: blur(2.5px);
+}
+
+.plasma-exhaust-particle.particle-ember {
+  animation: plasmaEmberDrift 0.6s cubic-bezier(0.2, 0.8, 0.3, 1) forwards;
+}
+
+@keyframes plasmaCoreDischarge {
   0% {
     opacity: 1;
-    transform: translateY(0) scale(0.6) rotate(0deg);
+    transform: scale(0.6) translate3d(0, 0, 0);
   }
   50% {
-    opacity: 1;
-    transform: translateY(-20px) scale(1.2) rotate(20deg);
+    opacity: 0.95;
+    transform: scale(1.3) translate3d(0, 4px, 0);
   }
   100% {
     opacity: 0;
-    transform: translateY(-40px) scale(0.8) rotate(45deg);
+    transform: scale(0.2) translate3d(0, 10px, 0);
   }
 }
 
+@keyframes plasmaVaporExpand {
+  0% {
+    opacity: 0.9;
+    transform: scale(0.5) translate3d(0, 0, 0);
+  }
+  50% {
+    opacity: 0.55;
+    transform: scale(1.6) translate3d(0, 8px, 0);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(2.4) translate3d(0, 18px, 0);
+  }
+}
+
+@keyframes plasmaEmberDrift {
+  0% {
+    opacity: 1;
+    transform: scale(1) translate3d(0, 0, 0);
+  }
+  60% {
+    opacity: 0.8;
+    transform: scale(0.9) translate3d(-3px, 12px, 0);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0.1) translate3d(4px, 22px, 0);
+  }
+}
+
+
+/* ============================================================
+   Solid Hard-Surface Ground Contact Shadow & Surface Horizon
+   ============================================================ */
+.astro-ground-shadow {
+  position: absolute;
+  bottom: -2px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 44px;
+  height: 8px;
+  border-radius: 50%;
+  background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.88) 0%, rgba(15, 23, 42, 0.6) 45%, rgba(56, 189, 248, 0.2) 75%, transparent 100%);
+  filter: blur(1px);
+  pointer-events: none;
+  z-index: 0;
+  transition: opacity 0.25s cubic-bezier(0.16, 1, 0.3, 1), transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.astro-ground-shadow.is-grounded {
+  opacity: 1;
+  transform: translateX(-50%) scale(1);
+}
+
+.astro-ground-shadow.is-airborne {
+  opacity: 0.18;
+  transform: translateX(-50%) scale(0.55) translateY(6px);
+  filter: blur(3.5px);
+}
+
+/* Luminous Platform Electromagnetic Surface Glow Field */
+.astro-platform-glow {
+  position: absolute;
+  bottom: -4px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100px;
+  height: 22px;
+  pointer-events: none;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.astro-platform-glow .platform-glow-aura {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: radial-gradient(ellipse at center, rgba(56, 189, 248, 0.85) 0%, rgba(168, 85, 247, 0.5) 45%, rgba(56, 189, 248, 0.2) 70%, transparent 100%);
+  filter: blur(3px);
+  animation: platformAuraBreathe 2.4s infinite ease-in-out;
+}
+
+.astro-platform-glow .platform-glow-beam {
+  position: absolute;
+  bottom: 4px;
+  width: 58px;
+  height: 2px;
+  border-radius: 1px;
+  background: linear-gradient(90deg, transparent 0%, rgba(56, 189, 248, 0.95) 20%, #ffffff 50%, rgba(56, 189, 248, 0.95) 80%, transparent 100%);
+  box-shadow: 0 0 10px #38bdf8, 0 0 20px #38bdf8, 0 0 32px #c084fc;
+  animation: platformBeamPulse 2.4s infinite ease-in-out;
+}
+
+@keyframes platformAuraBreathe {
+  0%, 100% {
+    transform: scale(0.95);
+    opacity: 0.85;
+  }
+  50% {
+    transform: scale(1.15);
+    opacity: 1;
+    filter: blur(4px);
+  }
+}
+
+@keyframes platformBeamPulse {
+  0%, 100% {
+    transform: scaleX(0.92);
+    opacity: 0.85;
+  }
+  50% {
+    transform: scaleX(1.18);
+    opacity: 1;
+    box-shadow: 0 0 14px #38bdf8, 0 0 28px #38bdf8, 0 0 42px #c084fc;
+  }
+}
+
+/* ============================================================
+   Solid Hard-Surface Landing Shockwaves & Footstep Ripples
+   ============================================================ */
+.surface-contact-effect {
+  position: fixed;
+  pointer-events: none;
+  z-index: 999997;
+  transform: translate(-50%, -50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 1. Touchdown Magnetic Landing Shockwave Plate (Expanded) */
+.surface-contact-effect.effect-landing {
+  width: 96px;
+  height: 26px;
+}
+
+.surface-contact-effect.effect-landing .surface-ring-outer {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  border: 2px solid rgba(56, 189, 248, 1);
+  box-shadow: 0 0 24px rgba(56, 189, 248, 1), 0 0 40px rgba(168, 85, 247, 0.8), inset 0 0 16px rgba(56, 189, 248, 0.7);
+  animation: landingShockwaveExpand 0.5s cubic-bezier(0.1, 0.9, 0.2, 1) forwards;
+}
+
+.surface-contact-effect.effect-landing .surface-ring-inner {
+  position: absolute;
+  width: 65%;
+  height: 65%;
+  border-radius: 50%;
+  background: radial-gradient(ellipse at center, rgba(255, 255, 255, 1) 0%, rgba(56, 189, 248, 0.8) 45%, rgba(168, 85, 247, 0.4) 75%, transparent 100%);
+  box-shadow: 0 0 18px #ffffff, 0 0 30px #38bdf8;
+  animation: landingFlashFade 0.38s ease-out forwards;
+}
+
+@keyframes landingShockwaveExpand {
+  0% {
+    transform: scale(0.15);
+    opacity: 1;
+  }
+  45% {
+    opacity: 1;
+    transform: scale(1.1);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1.85);
+  }
+}
+
+@keyframes landingFlashFade {
+  0% {
+    transform: scale(0.15);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1.4);
+    opacity: 0;
+  }
+}
+
+/* 2. Hard-Surface Walking Footstep Contact Ripple (Expanded) */
+.surface-contact-effect.effect-footstep {
+  width: 32px;
+  height: 14px;
+}
+
+.surface-contact-effect.effect-footstep .surface-ring-outer {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  border: 1.5px solid rgba(56, 189, 248, 0.95);
+  box-shadow: 0 0 12px rgba(56, 189, 248, 0.85), 0 0 20px rgba(168, 85, 247, 0.5);
+  animation: footstepRippleExpand 0.38s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.surface-contact-effect.effect-footstep .surface-ring-inner {
+  position: absolute;
+  width: 45%;
+  height: 45%;
+  border-radius: 50%;
+  background: radial-gradient(circle, #ffffff 20%, #38bdf8 70%, transparent 100%);
+  box-shadow: 0 0 8px #38bdf8;
+  opacity: 1;
+  animation: footstepDotFade 0.28s ease-out forwards;
+}
+
+@keyframes footstepRippleExpand {
+  0% {
+    transform: scale(0.2);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1.7);
+    opacity: 0;
+  }
+}
+
+@keyframes footstepDotFade {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(0.2);
+    opacity: 0;
+  }
+}

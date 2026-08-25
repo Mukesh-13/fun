@@ -4,6 +4,14 @@ import { query } from './db';
 import { getJwtSecret } from './auth-edge';
 
 const BCRYPT_SALT_ROUNDS = 12;
+
+interface AuthCacheEntry {
+  isValid: boolean;
+  expiresAt: number;
+}
+const sessionCache = new Map<string, AuthCacheEntry>();
+const SESSION_CACHE_TTL_MS = 60 * 1000; // 60 seconds
+
 export async function hashPassword(plainPassword: string, customSalt = '') {
   const salt = await bcrypt.genSalt(BCRYPT_SALT_ROUNDS);
   const hash = await bcrypt.hash(plainPassword + customSalt, salt);
@@ -138,17 +146,35 @@ export async function verifySessionToken(token: string) {
     // DB check for revoked sessions (Fail-Closed)
     if (!payload.sub) return null;
     
+    const now = Date.now();
+    const cached = sessionCache.get(payload.sub);
+    
+    if (cached && cached.expiresAt > now) {
+      if (!cached.isValid) return null;
+      return payload;
+    }
+    
     const result = await query(
       `SELECT is_active, locked_until FROM public.users WHERE id = $1 LIMIT 1`,
       [payload.sub]
     );
 
-    if (result.rows.length === 0) return null;
+    if (result.rows.length === 0) {
+      sessionCache.set(payload.sub, { isValid: false, expiresAt: now + SESSION_CACHE_TTL_MS });
+      return null;
+    }
     const user = result.rows[0];
 
-    if (user.is_active === false) return null;
-    if (user.locked_until && new Date(user.locked_until) > new Date()) return null;
+    if (user.is_active === false) {
+      sessionCache.set(payload.sub, { isValid: false, expiresAt: now + SESSION_CACHE_TTL_MS });
+      return null;
+    }
+    if (user.locked_until && new Date(user.locked_until).getTime() > now) {
+      sessionCache.set(payload.sub, { isValid: false, expiresAt: now + SESSION_CACHE_TTL_MS });
+      return null;
+    }
 
+    sessionCache.set(payload.sub, { isValid: true, expiresAt: now + SESSION_CACHE_TTL_MS });
     return payload;
   } catch {
     return null;

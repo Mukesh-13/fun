@@ -1,16 +1,26 @@
 'use client';
 
 import React, { useEffect, useRef, useState } from 'react';
-import AnimatedAstronaut from '@/components/ui/AnimatedAstronaut';
+import AnimatedAstronaut from '@/core/_components/AnimatedAstronaut';
 
 type PetState = 'idle' | 'walking' | 'jumping' | 'falling';
 type Direction = 'left' | 'right';
 
-interface Sparkle {
+interface PlasmaParticle {
   id: number;
   x: number;
   y: number;
-  char: string;
+  size: number;
+  type: 'core' | 'vapor' | 'ember';
+  color: string;
+  glow: string;
+}
+
+interface SurfaceEffect {
+  id: number;
+  x: number;
+  y: number;
+  type: 'landing' | 'footstep';
 }
 
 interface JetpackFlight {
@@ -56,7 +66,8 @@ const hoverQuotes = [
 export default function DashboardPet() {
   const petRef = useRef<HTMLDivElement>(null);
   const requestRef = useRef<number | null>(null);
-  const [sparkles, setSparkles] = useState<Sparkle[]>([]);
+  const [plasmaParticles, setPlasmaParticles] = useState<PlasmaParticle[]>([]);
+  const [surfaceEffects, setSurfaceEffects] = useState<SurfaceEffect[]>([]);
   const [petState, setPetState] = useState<PetState>('falling');
   const [petDirection, setPetDirection] = useState<Direction>('right');
   const [speech, setSpeech] = useState('Vandhutten 🪂');
@@ -71,6 +82,9 @@ export default function DashboardPet() {
   const speechTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const speechLockUntil = useRef<number>(0);
   const currentPriority = useRef<number>(0);
+  const wasGrounded = useRef(false);
+  const stepAccumulator = useRef(0);
+  const stepFoot = useRef(false);
 
   // Smooth Jetpack Flight Trajectory Controller
   const jetpackFlight = useRef<JetpackFlight | null>(null);
@@ -83,8 +97,8 @@ export default function DashboardPet() {
     state: 'falling' as PetState,
     direction: 'right' as Direction,
     isGrounded: false,
-    width: 52,
-    height: 52,
+    width: 58,
+    height: 58,
   });
   const timer = useRef(0);
 
@@ -112,24 +126,89 @@ export default function DashboardPet() {
     }, durationMs);
   };
 
-  const triggerSparkles = (originX: number, originY: number, count = 4) => {
-    const chars = ['✨', '⭐', '🚀', '💫', '💜', '🌟'];
-    const newSparkles: Sparkle[] = Array.from({ length: count }).map((_, i) => ({
-      id: Date.now() + Math.random() + i,
-      x: originX + (Math.random() - 0.5) * 40,
-      y: originY - 10 - Math.random() * 25,
-      char: chars[Math.floor(Math.random() * chars.length)],
-    }));
-
-    setSparkles((prev) => [...prev, ...newSparkles]);
+  // Solid Surface Landing Impact Shockwave (Magnetic contact ring)
+  const triggerLandingShockwave = (centerX: number, surfaceY: number) => {
+    const newEffect: SurfaceEffect = {
+      id: Date.now() + Math.random(),
+      x: centerX,
+      y: surfaceY,
+      type: 'landing',
+    };
+    setSurfaceEffects((prev) => [...prev.slice(-8), newEffect]);
     setTimeout(() => {
-      setSparkles((prev) => prev.filter((s) => !newSparkles.some((ns) => ns.id === s.id)));
-    }, 900);
+      setSurfaceEffects((prev) => prev.filter((ef) => ef.id !== newEffect.id));
+    }, 450);
+  };
+
+  // Hard-Surface Footstep Contact Ripple (Tactile magnetic walk)
+  const triggerFootstepRipple = (footX: number, surfaceY: number) => {
+    const newEffect: SurfaceEffect = {
+      id: Date.now() + Math.random(),
+      x: footX,
+      y: surfaceY,
+      type: 'footstep',
+    };
+    setSurfaceEffects((prev) => [...prev.slice(-10), newEffect]);
+    setTimeout(() => {
+      setSurfaceEffects((prev) => prev.filter((ef) => ef.id !== newEffect.id));
+    }, 380);
+  };
+
+  // High-Fidelity Sci-Fi Plasma & Ion Exhaust Particle Generator
+  const triggerPlasmaExhaust = (originX: number, originY: number, count = 3, isBurst = false) => {
+    const isLeft = status.current.direction === 'left';
+    // Exact nozzle position beneath firmly anchored backpack
+    const nozzleX = isLeft ? originX + 44 : originX + 14;
+    const nozzleY = originY + 48;
+
+    const actualCount = isBurst ? 8 : count;
+    const newParticles: PlasmaParticle[] = [];
+
+    for (let i = 0; i < actualCount; i++) {
+      const pType: 'core' | 'vapor' | 'ember' = i === 0 ? 'core' : i % 2 === 0 ? 'vapor' : 'ember';
+      // Particles spray strictly backwards (away from face) and downwards
+      const backwardDrift = isLeft ? (Math.random() * 5 + 2) : -(Math.random() * 5 + 2);
+      const spreadX = backwardDrift + (Math.random() - 0.5) * (isBurst ? 8 : 3);
+      const spreadY = Math.random() * (isBurst ? 10 : 5) + 2;
+
+      let size = 6;
+      let color = '#38bdf8';
+      let glow = '0 0 10px #38bdf8';
+
+      if (pType === 'core') {
+        size = isBurst ? 14 : 9;
+        color = 'radial-gradient(circle, #ffffff 15%, #38bdf8 65%, transparent 100%)';
+        glow = '0 0 14px #38bdf8, 0 0 24px #a855f7';
+      } else if (pType === 'vapor') {
+        size = isBurst ? 18 : 12;
+        color = 'radial-gradient(circle, rgba(56, 189, 248, 0.75) 0%, rgba(168, 85, 247, 0.45) 50%, transparent 80%)';
+        glow = '0 0 12px rgba(56, 189, 248, 0.45)';
+      } else {
+        size = 3 + Math.random() * 2.5;
+        color = Math.random() > 0.5 ? '#38bdf8' : '#ec4899';
+        glow = '0 0 8px currentColor';
+      }
+
+      newParticles.push({
+        id: Date.now() + Math.random() + i,
+        x: nozzleX + spreadX,
+        y: nozzleY + spreadY,
+        size,
+        type: pType,
+        color,
+        glow,
+      });
+    }
+
+    setPlasmaParticles((prev) => [...prev.slice(-20), ...newParticles]);
+    setTimeout(() => {
+      setPlasmaParticles((prev) => prev.filter((p) => !newParticles.some((np) => np.id === p.id)));
+    }, 750);
   };
 
   useEffect(() => {
     // Initial safe spawn point within viewport bounds
-    pos.current.x = Math.max(20, window.innerWidth / 2 - 26);
+    pos.current.x = Math.max(20, window.innerWidth / 2 - 29);
     pos.current.y = 85;
 
     // Initial greeting
@@ -169,11 +248,11 @@ export default function DashboardPet() {
         const elapsed = now - flight.startTime;
         const t = Math.min(1, Math.max(0, elapsed / flight.duration));
 
-        // Smooth cubic ease-in-out curve
-        const ease = t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+        // Smooth sinusoidal ease curve (eliminates middle acceleration spikes)
+        const ease = 0.5 * (1 - Math.cos(Math.PI * t));
 
         // Gentle aerodynamic upward curve during ascent
-        const arcLift = Math.sin(t * Math.PI) * 28;
+        const arcLift = Math.sin(t * Math.PI) * 24;
 
         const currentFlightX = flight.startX + (flight.targetX - flight.startX) * ease;
         const currentFlightY = flight.startY + (flight.targetY - flight.startY) * ease - arcLift;
@@ -187,8 +266,8 @@ export default function DashboardPet() {
         s.isGrounded = false;
 
         // Active thruster particle trail
-        if (Math.random() < 0.3) {
-          triggerSparkles(p.x + 26, p.y + 40, 1);
+        if (Math.random() < 0.45) {
+          triggerPlasmaExhaust(p.x, p.y, 2);
         }
 
         if (t >= 1) {
@@ -197,8 +276,8 @@ export default function DashboardPet() {
             p.y = Math.max(topLimit, flight.targetY + Math.sin(now / 220) * 3);
             s.state = 'jumping';
             s.isGrounded = false;
-            if (Math.random() < 0.22) {
-              triggerSparkles(p.x + 26, p.y + 40, 1);
+            if (Math.random() < 0.3) {
+              triggerPlasmaExhaust(p.x, p.y, 1);
             }
           } else {
             // Dialogue ended -> Smooth touchdown
@@ -209,6 +288,7 @@ export default function DashboardPet() {
             s.isGrounded = true;
             s.state = 'idle';
             jetpackFlight.current = null;
+            triggerLandingShockwave(p.x + 29, p.y + s.height);
           }
         }
       } else if (isClickHovering.current) {
@@ -221,20 +301,78 @@ export default function DashboardPet() {
           v.vy *= 0.94;
           s.state = 'jumping';
           s.isGrounded = false;
-          if (Math.random() < 0.25) {
-            triggerSparkles(p.x + 26, p.y + 40, 1);
+          if (Math.random() < 0.35) {
+            triggerPlasmaExhaust(p.x, p.y, 2);
           }
         } else {
           isClickHovering.current = false;
         }
       } else {
         // =========================================================================
-        // 3. NATURAL LUNAR GRAVITY PHYSICS & STANDARD MOVEMENT
+        // 3. TWO-PHASE KINEMATIC FREE-FALL & POWERED DESCENT ENGINE
         // =========================================================================
-        v.vy += 0.16;
-        if (v.vy > 8.5) v.vy = 8.5;
+        if (!s.isGrounded) {
+          // Identify closest target landing platform surface directly beneath current position
+          const currentX = p.x;
+          const currentBottomY = p.y + s.height;
+          let targetSurfaceY = bottomLimit + s.height; // Default to viewport floor level
 
-        // Apply velocity
+          const obstacles = Array.from(
+            document.querySelectorAll('.bento-card, .bento-search-filter-bar, .bento-welcome')
+          );
+
+          for (const el of obstacles) {
+            const rect = el.getBoundingClientRect();
+            if (rect.bottom < topLimit || rect.top > bottomLimit) continue;
+            // Check if platform is positioned vertically beneath the astronaut
+            if (
+              rect.top >= currentBottomY - 8 &&
+              currentX + s.width - 8 > rect.left &&
+              currentX + 8 < rect.right
+            ) {
+              if (rect.top < targetSurfaceY) {
+                targetSurfaceY = rect.top;
+              }
+            }
+          }
+
+          const distToSurface = targetSurfaceY - currentBottomY;
+          const brakingDistance = 80; // Distance window (in px) where retro-braking takes effect
+
+          if (distToSurface > brakingDistance) {
+            // -------------------------------------------------------------
+            // PHASE 1: NATURAL GRAVITATIONAL FREE-FALL (Upper Half)
+            // -------------------------------------------------------------
+            s.state = 'falling';
+            // Natural acceleration under lunar gravity
+            v.vy = Math.min(4.8, v.vy + 0.20);
+          } else {
+            // -------------------------------------------------------------
+            // PHASE 2: SYSTEMATIC TORRICELLI RETRO-BRAKING (Lower Half)
+            // Kinematic constant-deceleration curve: v_target = v_min + (v_peak - v_min) * sqrt(d / d_burn)
+            // -------------------------------------------------------------
+            s.state = 'jumping';
+            const tau = Math.max(0, Math.min(1, distToSurface / brakingDistance));
+            const vTarget = 0.35 + 3.45 * Math.sqrt(tau);
+
+            // Systematic convergence to target kinematic velocity curve
+            v.vy += (vTarget - v.vy) * 0.28;
+
+            // Thruster exhaust intensity scales with braking effort
+            const thrusterChance = tau < 0.4 ? 0.75 : 0.45;
+            if (Math.random() < thrusterChance) {
+              triggerPlasmaExhaust(p.x, p.y, tau < 0.3 ? 3 : 2);
+            }
+          }
+
+          // Gentle lateral air resistance
+          v.vx *= 0.98;
+        } else {
+          // Grounded
+          v.vy = 0;
+        }
+
+        // Apply velocity to position
         let nextX = p.x + v.vx;
         let nextY = p.y + v.vy;
 
@@ -272,7 +410,7 @@ export default function DashboardPet() {
           const rect = el.getBoundingClientRect();
           if (rect.bottom < topLimit || rect.top > bottomLimit) continue;
 
-          // Only land when falling downwards close to the platform surface
+          // Only land when descending close to the platform surface
           if (
             v.vy >= 0 &&
             p.y + s.height <= rect.top + 10 &&
@@ -287,13 +425,30 @@ export default function DashboardPet() {
           }
         }
 
-        s.isGrounded = landed;
-        if (!landed && s.state !== 'jumping') {
-          s.state = 'falling';
+        // Detect solid surface impact upon touchdown
+        if (!wasGrounded.current && landed) {
+          triggerLandingShockwave(nextX + 29, nextY + s.height);
+          s.state = 'idle';
         }
+        wasGrounded.current = landed;
+        s.isGrounded = landed;
 
         p.x = nextX;
         p.y = nextY;
+      }
+
+      // Hard-Surface Footstep Contact Generator
+      if (s.state === 'walking' && s.isGrounded) {
+        stepAccumulator.current += dt;
+        if (stepAccumulator.current > 280) {
+          stepAccumulator.current = 0;
+          stepFoot.current = !stepFoot.current;
+          const isLeft = s.direction === 'left';
+          const footOffsetX = stepFoot.current ? (isLeft ? 38 : 20) : (isLeft ? 20 : 38);
+          triggerFootstepRipple(p.x + footOffsetX, p.y + s.height);
+        }
+      } else {
+        stepAccumulator.current = 0;
       }
 
       // Synchronize React state
@@ -319,89 +474,111 @@ export default function DashboardPet() {
         if (s.isGrounded) {
           const rand = Math.random();
 
-          if (rand < 0.4) {
+          if (rand < 0.25) {
             // Behavioral Match 1: Speak an Idle Thought & Stay in Place
             s.state = 'idle';
             v.vx = 0;
             const quote = idleQuotes[Math.floor(Math.random() * idleQuotes.length)];
             displaySpeech(quote, 4500, 1);
-          } else if (rand < 0.7) {
-            // Behavioral Match 2: Slow Relaxed Moonwalk
+          } else if (rand < 0.65) {
+            // Behavioral Match 2: Active Cheerful Moonwalk & Platform Pacing
             s.state = 'walking';
             s.direction = Math.random() > 0.5 ? 'left' : 'right';
-            v.vx = s.direction === 'left' ? -0.35 : 0.35;
+            v.vx = s.direction === 'left' ? -0.85 : 0.85;
           } else {
-            // Behavioral Match 3: Target Navigation (Jump vs Smooth Jetpack Flight)
+            // Behavioral Match 3: Dashboard-Wide Target Navigation & Exploration
             const currentBottom = p.y + s.height;
-            const currentCenterX = p.x + s.width / 2;
+            const currentLeft = p.x;
+            const currentRight = p.x + s.width;
 
             const freshObstacles = Array.from(
               document.querySelectorAll('.bento-card, .bento-search-filter-bar, .bento-welcome')
             );
-            const targets = [];
+            
+            interface TargetLocation {
+              targetX: number;
+              targetY: number;
+              dist: number;
+            }
+
+            const validTargets: TargetLocation[] = [];
 
             for (const el of freshObstacles) {
               const rect = el.getBoundingClientRect();
               if (rect.bottom < topLimit || rect.top > bottomLimit) continue;
 
-              const targetCenterX = (rect.left + rect.right) / 2;
-              const dy = currentBottom - rect.top;
-              const dx = targetCenterX - currentCenterX;
+              // Exclude platform pet is currently standing on
+              const isStandingOnThis =
+                Math.abs(currentBottom - rect.top) < 14 &&
+                currentRight > rect.left + 4 &&
+                currentLeft < rect.right - 4;
 
-              if (Math.abs(dy) > 10) {
-                targets.push({
-                  top: rect.top,
-                  left: rect.left,
-                  right: rect.right,
-                  targetCenterX,
-                  dy,
-                  dx,
-                });
+              if (isStandingOnThis) continue;
+
+              // Calculate randomized landing coordinate across top surface of the card
+              const minLandingX = Math.max(leftLimit, rect.left + 14);
+              const maxLandingX = Math.min(rightLimit, rect.right - s.width - 14);
+              const landingX =
+                minLandingX < maxLandingX
+                  ? minLandingX + Math.random() * (maxLandingX - minLandingX)
+                  : Math.max(leftLimit, Math.min(rightLimit, (rect.left + rect.right) / 2 - s.width / 2));
+              const landingY = Math.max(topLimit, rect.top - s.height);
+
+              const dist = Math.hypot(landingX - p.x, landingY - p.y);
+              if (dist > 25) {
+                validTargets.push({ targetX: landingX, targetY: landingY, dist });
               }
             }
 
-            if (targets.length > 0) {
-              targets.sort((a, b) => {
-                const distA = Math.hypot(a.dy, a.dx);
-                const distB = Math.hypot(b.dy, b.dx);
-                return distA - distB;
-              });
+            // Also add viewport floor as a valid landing destination if not already on the floor
+            if (p.y < bottomLimit - 25) {
+              const randomFloorX = leftLimit + Math.random() * (rightLimit - leftLimit);
+              const floorDist = Math.hypot(randomFloorX - p.x, bottomLimit - p.y);
+              validTargets.push({ targetX: randomFloorX, targetY: bottomLimit, dist: floorDist });
+            }
 
-              const target = targets[Math.floor(Math.random() * Math.min(3, targets.length))];
+            if (validTargets.length > 0) {
+              // Pick a target randomly across the entire dashboard
+              const target = validTargets[Math.floor(Math.random() * validTargets.length)];
+              const flightDist = target.dist;
 
-              if (target.dy > 70) {
-                // High destination -> Smooth Cubic Jetpack Flight Trajectory (Duration: 2.2s)
+              if (flightDist > 45 || Math.abs(target.targetY - p.y) > 25) {
+                // Smooth, gentle Zero-G Jetpack Flight Trajectory (Distance-scaled ~100-120 px/s)
+                const flightDuration = Math.max(5200, Math.min(8800, flightDist * 7.5));
                 jetpackFlight.current = {
                   startX: p.x,
                   startY: p.y,
-                  targetX: Math.max(leftLimit, Math.min(rightLimit, target.targetCenterX - s.width / 2)),
-                  targetY: Math.max(topLimit, target.top - s.height),
+                  targetX: target.targetX,
+                  targetY: target.targetY,
                   startTime: performance.now(),
-                  duration: 2200,
+                  duration: flightDuration,
                 };
                 s.state = 'jumping';
                 s.isGrounded = false;
                 const quote = jetpackQuotes[Math.floor(Math.random() * jetpackQuotes.length)];
-                displaySpeech(quote, 4500, 2);
+                displaySpeech(quote, flightDuration + 1400, 2);
               } else {
-                // Natural parabolic hop
+                // Short local hop (strictly speed-clamped)
                 s.state = 'jumping';
                 s.isGrounded = false;
-                const H = Math.max(target.dy + 18, 28);
+                const dy = p.y - target.targetY;
+                const dx = target.targetX - p.x;
+                const H = Math.max(dy + 12, 20);
                 const g = 0.16;
                 v.vy = -Math.sqrt(2 * g * H);
 
                 const t_up = Math.abs(v.vy) / g;
-                const t_down = Math.sqrt(2 * Math.max(0, H - target.dy) / g);
-                const total_time = t_up + t_down;
+                const t_down = Math.sqrt(2 * Math.max(0, H - dy) / g);
+                const total_time = Math.max(1, t_up + t_down);
 
-                const randomOffset = (Math.random() - 0.5) * (target.right - target.left) * 0.3;
-                v.vx = (target.dx + randomOffset) / (total_time || 1);
+                const rawVx = dx / total_time;
+                v.vx = Math.max(-0.9, Math.min(0.9, rawVx));
                 s.direction = v.vx < 0 ? 'left' : 'right';
               }
             } else {
-              v.vy = -5.0;
-              v.vx = (Math.random() - 0.5) * 1.8;
+              // Gentle random hop
+              v.vy = -3.8;
+              v.vx = (Math.random() - 0.5) * 1.0;
               s.direction = v.vx < 0 ? 'left' : 'right';
             }
           }
@@ -431,11 +608,11 @@ export default function DashboardPet() {
     jetpackFlight.current = null;
     isClickHovering.current = true;
 
-    vel.current.vy = -5.8;
-    vel.current.vx = (Math.random() - 0.5) * 3.0;
+    vel.current.vy = -3.8;
+    vel.current.vx = (Math.random() - 0.5) * 1.4;
     status.current.state = 'jumping';
     status.current.isGrounded = false;
-    triggerSparkles(pos.current.x + 26, pos.current.y, 5);
+    triggerPlasmaExhaust(pos.current.x, pos.current.y, 6, true);
 
     const clickQuote = clickQuotes[Math.floor(Math.random() * clickQuotes.length)];
     displaySpeech(clickQuote, 4200, 3);
@@ -470,20 +647,51 @@ export default function DashboardPet() {
           <div className="speech-arrow"></div>
         </div>
 
+        {/* Dynamic Solid Surface Contact Shadow */}
+        <div
+          className={`astro-ground-shadow ${status.current.isGrounded ? 'is-grounded' : 'is-airborne'}`}
+        />
+
+        {/* High-Visibility Vibrant Platform Surface Glow */}
+        {status.current.isGrounded && (
+          <div className="astro-platform-glow">
+            <div className="platform-glow-aura" />
+            <div className="platform-glow-beam" />
+          </div>
+        )}
+
         {/* Astronaut Avatar with co-flipping vector thrusters */}
         <AnimatedAstronaut state={petState} direction={petDirection} />
       </div>
 
-      {sparkles.map((sp) => (
+      {/* Real-Time Sci-Fi Plasma Jet Stream */}
+      {plasmaParticles.map((pt) => (
         <div
-          key={sp.id}
-          className="pet-sparkle-burst"
+          key={pt.id}
+          className={`plasma-exhaust-particle particle-${pt.type}`}
           style={{
-            left: `${sp.x}px`,
-            top: `${sp.y}px`,
+            left: `${pt.x}px`,
+            top: `${pt.y}px`,
+            width: `${pt.size}px`,
+            height: `${pt.size}px`,
+            background: pt.color,
+            boxShadow: pt.glow,
+          }}
+        />
+      ))}
+
+      {/* Solid Hard-Surface Landing Shockwaves & Footstep Contact Ripples */}
+      {surfaceEffects.map((ef) => (
+        <div
+          key={ef.id}
+          className={`surface-contact-effect effect-${ef.type}`}
+          style={{
+            left: `${ef.x}px`,
+            top: `${ef.y}px`,
           }}
         >
-          {sp.char}
+          <div className="surface-ring-outer" />
+          <div className="surface-ring-inner" />
         </div>
       ))}
     </>

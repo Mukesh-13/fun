@@ -2,7 +2,7 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   outputFileTracingIncludes: {
-    '/api/media/[...file]': ['./src/assets/**/*'],
+    '/api/media/[...file]': ['./src/modules/core/_assets/**/*'],
   },
   async headers() {
     return [

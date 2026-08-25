@@ -1,4 +1,4 @@
-import ThinkingView from './_components/ThinkingView';
+import ThinkingView from '@/modules/dashboard/_components/thinking/ThinkingView';
 
 export const metadata = {
   title: 'Dashboard | Thinking',
