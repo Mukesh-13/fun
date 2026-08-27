@@ -217,9 +217,12 @@ export default function DashboardPet() {
     }, 800);
 
     let lastTime = performance.now();
+    let isVisible = !document.hidden;
 
     const loop = (time: number) => {
-      const dt = time - lastTime;
+      if (!isVisible) return;
+      
+      const dt = Math.min(time - lastTime, 100); // cap dt to prevent physics explosions
       lastTime = time;
 
       if (!petRef.current) return;
@@ -589,11 +592,29 @@ export default function DashboardPet() {
       petRef.current.style.transform = `translate3d(${p.x}px, ${p.y}px, 0)`;
       petRef.current.dataset.state = s.state;
 
-      requestRef.current = requestAnimationFrame(loop);
+      if (isVisible) {
+        requestRef.current = requestAnimationFrame(loop);
+      }
     };
 
-    requestRef.current = requestAnimationFrame(loop);
+    const handleVisibilityChange = () => {
+      isVisible = !document.hidden;
+      if (isVisible) {
+        lastTime = performance.now();
+        requestRef.current = requestAnimationFrame(loop);
+      } else {
+        if (requestRef.current) cancelAnimationFrame(requestRef.current);
+      }
+    };
+
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+    
+    if (isVisible) {
+      requestRef.current = requestAnimationFrame(loop);
+    }
+
     return () => {
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
       if (requestRef.current) cancelAnimationFrame(requestRef.current);
       clearTimeout(initTimer);
       if (speechTimeoutRef.current) clearTimeout(speechTimeoutRef.current);

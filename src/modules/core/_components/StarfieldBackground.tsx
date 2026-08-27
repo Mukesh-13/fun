@@ -117,78 +117,95 @@ export default function StarfieldBackground() {
 
     let nextShootingStarTime = performance.now() + Math.random() * 4000 + 2000;
 
-    function render(currentTime: number) {
-      ctx!.clearRect(0, 0, width, height);
+      let isVisible = !document.hidden;
 
-      for (let i = 0; i < stars.length; i++) {
-        const star = stars[i];
-        const twinkle = Math.sin(currentTime * star.twinkleSpeed + star.twinklePhase);
-        const currentAlpha = Math.max(0.12, Math.min(0.95, star.baseAlpha + twinkle * 0.35));
+      function render(currentTime: number) {
+        if (!isVisible) return;
+        ctx!.clearRect(0, 0, width, height);
 
-        if (star.glow && currentAlpha > 0.5) {
-          ctx!.save();
-          drawCurvedDiamondStar(ctx!, star.x, star.y, star.radius * 2.0);
-          ctx!.fillStyle = star.colorPrefix + (currentAlpha * 0.18) + ')';
+        for (let i = 0; i < stars.length; i++) {
+          const star = stars[i];
+          const twinkle = Math.sin(currentTime * star.twinkleSpeed + star.twinklePhase);
+          const currentAlpha = Math.max(0.12, Math.min(0.95, star.baseAlpha + twinkle * 0.35));
+
+          if (star.glow && currentAlpha > 0.5) {
+            ctx!.save();
+            drawCurvedDiamondStar(ctx!, star.x, star.y, star.radius * 2.0);
+            ctx!.fillStyle = star.colorPrefix + (currentAlpha * 0.18) + ')';
+            ctx!.fill();
+            ctx!.restore();
+          }
+
+          drawCurvedDiamondStar(ctx!, star.x, star.y, star.radius);
+          ctx!.fillStyle = star.colorPrefix + currentAlpha + ')';
           ctx!.fill();
-          ctx!.restore();
         }
 
-        drawCurvedDiamondStar(ctx!, star.x, star.y, star.radius);
-        ctx!.fillStyle = star.colorPrefix + currentAlpha + ')';
-        ctx!.fill();
-      }
-
-      if (currentTime > nextShootingStarTime) {
-        spawnShootingStar();
-        nextShootingStarTime = currentTime + Math.random() * 6000 + 3000;
-      }
-
-      for (let i = shootingStars.length - 1; i >= 0; i--) {
-        const s = shootingStars[i];
-        s.x += s.dx;
-        s.y += s.dy;
-        s.life -= s.decay;
-
-        if (s.life <= 0 || s.x > width + 200 || s.y > height + 200) {
-          shootingStars.splice(i, 1);
-          continue;
+        if (currentTime > nextShootingStarTime) {
+          spawnShootingStar();
+          nextShootingStarTime = currentTime + Math.random() * 6000 + 3000;
         }
 
-        const tailX = s.x - (s.dx / s.speed) * s.length;
-        const tailY = s.y - (s.dy / s.speed) * s.length;
+        for (let i = shootingStars.length - 1; i >= 0; i--) {
+          const s = shootingStars[i];
+          s.x += s.dx;
+          s.y += s.dy;
+          s.life -= s.decay;
 
-        const gradient = ctx!.createLinearGradient(s.x, s.y, tailX, tailY);
-        gradient.addColorStop(0, `rgba(255, 255, 255, ${s.life * 0.95})`);
-        gradient.addColorStop(0.3, `rgba(186, 230, 253, ${s.life * 0.6})`);
-        gradient.addColorStop(1, 'rgba(56, 189, 248, 0)');
+          if (s.life <= 0 || s.x > width + 200 || s.y > height + 200) {
+            shootingStars.splice(i, 1);
+            continue;
+          }
 
-        ctx!.beginPath();
-        ctx!.moveTo(s.x, s.y);
-        ctx!.lineTo(tailX, tailY);
-        ctx!.strokeStyle = gradient;
-        ctx!.lineWidth = s.width;
-        ctx!.lineCap = 'round';
-        ctx!.stroke();
+          const tailX = s.x - (s.dx / s.speed) * s.length;
+          const tailY = s.y - (s.dy / s.speed) * s.length;
+
+          const gradient = ctx!.createLinearGradient(s.x, s.y, tailX, tailY);
+          gradient.addColorStop(0, `rgba(255, 255, 255, ${s.life * 0.95})`);
+          gradient.addColorStop(0.3, `rgba(186, 230, 253, ${s.life * 0.6})`);
+          gradient.addColorStop(1, 'rgba(56, 189, 248, 0)');
+
+          ctx!.beginPath();
+          ctx!.moveTo(s.x, s.y);
+          ctx!.lineTo(tailX, tailY);
+          ctx!.strokeStyle = gradient;
+          ctx!.lineWidth = s.width;
+          ctx!.lineCap = 'round';
+          ctx!.stroke();
+        }
+
+        animationFrameId = requestAnimationFrame(render);
       }
 
-      animationFrameId = requestAnimationFrame(render);
-    }
+      let resizeTimer: NodeJS.Timeout | null = null;
+      const handleResize = () => {
+        if (resizeTimer) clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(resizeCanvas, 150);
+      };
 
-    let resizeTimer: NodeJS.Timeout | null = null;
-    const handleResize = () => {
-      if (resizeTimer) clearTimeout(resizeTimer);
-      resizeTimer = setTimeout(resizeCanvas, 150);
-    };
+      const handleVisibilityChange = () => {
+        isVisible = !document.hidden;
+        if (isVisible) {
+          animationFrameId = requestAnimationFrame(render);
+        } else {
+          cancelAnimationFrame(animationFrameId);
+        }
+      };
 
-    window.addEventListener('resize', handleResize);
-    resizeCanvas();
-    animationFrameId = requestAnimationFrame(render);
+      window.addEventListener('resize', handleResize);
+      document.addEventListener('visibilitychange', handleVisibilityChange);
+      
+      resizeCanvas();
+      if (isVisible) {
+        animationFrameId = requestAnimationFrame(render);
+      }
 
-    return () => {
-      window.removeEventListener('resize', handleResize);
-      cancelAnimationFrame(animationFrameId);
-    };
-  }, []);
+      return () => {
+        window.removeEventListener('resize', handleResize);
+        document.removeEventListener('visibilitychange', handleVisibilityChange);
+        cancelAnimationFrame(animationFrameId);
+      };
+    }, []);
 
   return <canvas id="starfieldCanvas" ref={canvasRef} aria-hidden="true"></canvas>;
 }

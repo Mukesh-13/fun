@@ -1,15 +1,16 @@
 "use client";
 
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { motion } from 'motion/react';
 
 export default function ThinkingView() {
   const manVideoRef = useRef<HTMLVideoElement>(null);
   const womanVideoRef = useRef<HTMLVideoElement>(null);
+  const manTimeRef = useRef<HTMLSpanElement>(null);
+  const womanTimeRef = useRef<HTMLSpanElement>(null);
+  
   const [manPlaying, setManPlaying] = useState(false);
   const [womanPlaying, setWomanPlaying] = useState(false);
-  const [manTime, setManTime] = useState('0:00');
-  const [womanTime, setWomanTime] = useState('0:00');
 
   const formatTime = (seconds: number) => {
     if (isNaN(seconds) || seconds < 0) return '0:00';
@@ -19,10 +20,10 @@ export default function ThinkingView() {
     return `${mins}:${secs < 10 ? '0' : ''}${secs}`;
   };
 
-  const handleVideoTimeUpdate = (videoRef: React.RefObject<HTMLVideoElement | null>, setTime: (time: string) => void) => {
-    if (videoRef.current && videoRef.current.duration) {
+  const handleVideoTimeUpdate = (videoRef: React.RefObject<HTMLVideoElement | null>, timeDisplayRef: React.RefObject<HTMLSpanElement | null>) => {
+    if (videoRef.current && videoRef.current.duration && timeDisplayRef.current) {
       const remaining = Math.max(0, videoRef.current.duration - videoRef.current.currentTime);
-      setTime(formatTime(remaining));
+      timeDisplayRef.current.innerText = formatTime(remaining);
     }
   };
 
@@ -38,6 +39,26 @@ export default function ThinkingView() {
       } catch {}
     }
   };
+
+  // Pause videos when tab is hidden
+  useEffect(() => {
+    const handleVisibilityChange = () => {
+      if (document.hidden) {
+        if (manVideoRef.current && !manVideoRef.current.paused) {
+          manVideoRef.current.pause();
+          setManPlaying(false);
+        }
+        if (womanVideoRef.current && !womanVideoRef.current.paused) {
+          womanVideoRef.current.pause();
+          setWomanPlaying(false);
+        }
+      }
+    };
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+    return () => {
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
+    };
+  }, []);
 
   return (
     <motion.div
@@ -60,11 +81,11 @@ export default function ThinkingView() {
               playsInline
               preload="metadata"
               src="/api/media/Man_Video.mp4"
-              onTimeUpdate={() => handleVideoTimeUpdate(manVideoRef, setManTime)}
-              onLoadedMetadata={() => handleVideoTimeUpdate(manVideoRef, setManTime)}
+              onTimeUpdate={() => handleVideoTimeUpdate(manVideoRef, manTimeRef)}
+              onLoadedMetadata={() => handleVideoTimeUpdate(manVideoRef, manTimeRef)}
               onEnded={() => setManPlaying(false)}
             ></video>
-            <span className="time-remaining">{manTime}</span>
+            <span className="time-remaining" ref={manTimeRef}>0:00</span>
             <motion.button 
               type="button" 
               whileHover={{ scale: 1.12 }}
@@ -107,11 +128,11 @@ export default function ThinkingView() {
               playsInline
               preload="metadata"
               src="/api/media/Woman_Video.mp4"
-              onTimeUpdate={() => handleVideoTimeUpdate(womanVideoRef, setWomanTime)}
-              onLoadedMetadata={() => handleVideoTimeUpdate(womanVideoRef, setWomanTime)}
+              onTimeUpdate={() => handleVideoTimeUpdate(womanVideoRef, womanTimeRef)}
+              onLoadedMetadata={() => handleVideoTimeUpdate(womanVideoRef, womanTimeRef)}
               onEnded={() => setWomanPlaying(false)}
             ></video>
-            <span className="time-remaining">{womanTime}</span>
+            <span className="time-remaining" ref={womanTimeRef}>0:00</span>
             <motion.button 
               type="button" 
               whileHover={{ scale: 1.12 }}

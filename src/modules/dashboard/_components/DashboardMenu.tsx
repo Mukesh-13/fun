@@ -7,7 +7,8 @@ import BentoWelcomeHeader from './bento/BentoWelcomeHeader';
 import BentoSearchFilter from './bento/BentoSearchFilter';
 import MagneticCard from '@/core/_components/MagneticCard';
 import BorderBeam from '@/core/_components/BorderBeam';
-import DashboardPet from './DashboardPet';
+import dynamic from 'next/dynamic';
+const DashboardPet = dynamic(() => import('./DashboardPet'), { ssr: false });
 
 interface DashboardMenuProps {
   username?: string;
