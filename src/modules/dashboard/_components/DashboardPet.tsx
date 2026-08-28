@@ -72,6 +72,7 @@ export default function DashboardPet() {
   const [petDirection, setPetDirection] = useState<Direction>('right');
   const [speech, setSpeech] = useState('Vandhutten 🪂');
   const [showSpeech, setShowSpeech] = useState(true);
+  const [isGrounded, setIsGrounded] = useState(false);
 
   // 4-Way Bubble Placement States
   const [bubbleVPos, setBubbleVPos] = useState<'bubble-pos-top' | 'bubble-pos-bottom'>('bubble-pos-bottom');
@@ -79,6 +80,7 @@ export default function DashboardPet() {
 
   const lastState = useRef<PetState>('falling');
   const lastDirection = useRef<Direction>('right');
+  const lastIsGrounded = useRef(false);
   const speechTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const speechLockUntil = useRef<number>(0);
   const currentPriority = useRef<number>(0);
@@ -463,6 +465,10 @@ export default function DashboardPet() {
         lastDirection.current = s.direction;
         setPetDirection(s.direction);
       }
+      if (s.isGrounded !== lastIsGrounded.current) {
+        lastIsGrounded.current = s.isGrounded;
+        setIsGrounded(s.isGrounded);
+      }
 
       // Smart 4-Way Speech Bubble Placement
       const vPos = p.y < 125 ? 'bubble-pos-bottom' : 'bubble-pos-top';
@@ -670,11 +676,11 @@ export default function DashboardPet() {
 
         {/* Dynamic Solid Surface Contact Shadow */}
         <div
-          className={`astro-ground-shadow ${status.current.isGrounded ? 'is-grounded' : 'is-airborne'}`}
+          className={`astro-ground-shadow ${isGrounded ? 'is-grounded' : 'is-airborne'}`}
         />
 
         {/* High-Visibility Vibrant Platform Surface Glow */}
-        {status.current.isGrounded && (
+        {isGrounded && (
           <div className="astro-platform-glow">
             <div className="platform-glow-aura" />
             <div className="platform-glow-beam" />

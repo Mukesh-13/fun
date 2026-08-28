@@ -20,6 +20,7 @@ interface CardItem {
   desc: string;
   date: string;
   href?: string;
+  images: [string, string];
 }
 
 const placeholderModules: CardItem[] = [
@@ -29,16 +30,20 @@ const placeholderModules: CardItem[] = [
     desc: 'How thinking works for us',
     date: '18-08-2026',
     href: '/dashboard/thinking',
+    images: ['/api/media/thinking/Man.png', '/api/media/thinking/Woman.png'],
   },
   {
-    id: 'dress-nighty',
-    title: 'Dress : Nighty',
-    desc: 'When you wear nighty',
+    id: 'expectation-vs-reality',
+    title: 'What I expected vs What I got',
+    desc: 'expectation vs reality',
     date: '25-08-2026',
-    href: '/dashboard/dress-nighty',
+    href: '/dashboard/expectation-vs-reality',
+    images: [
+      '/api/media/expectationvsreality/expected/Image_1.png', 
+      '/api/media/expectationvsreality/reality/Image_1.png'
+    ],
   },
 ];
-
 
 export default function DashboardMenu({ username = 'User' }: DashboardMenuProps) {
   const [searchQuery, setSearchQuery] = useState('');
@@ -183,9 +188,9 @@ export default function DashboardMenu({ username = 'User' }: DashboardMenuProps)
                         <div className="hero-characters-stage">
                           <div className="characters-pair-wrapper">
                             {/* eslint-disable-next-line @next/next/no-img-element */}
-                            <img src="/api/media/Man.png" alt="Man" className="bento-char-img char-man" />
+                            <img src={item.images[0]} alt="Subject 1" className="bento-char-img char-man" />
                             {/* eslint-disable-next-line @next/next/no-img-element */}
-                            <img src="/api/media/Woman.png" alt="Woman" className="bento-char-img char-woman" />
+                            <img src={item.images[1]} alt="Subject 2" className="bento-char-img char-woman" />
                           </div>
                           <div className="characters-overlay-info">
                             <h2 className="hero-in-image-title">{item.title}</h2>

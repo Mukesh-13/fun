@@ -80,7 +80,7 @@ export default function ThinkingView() {
               className="thinking-video" 
               playsInline
               preload="metadata"
-              src="/api/media/Man_Video.mp4"
+              src="/api/media/thinking/Man_Video.mp4"
               onTimeUpdate={() => handleVideoTimeUpdate(manVideoRef, manTimeRef)}
               onLoadedMetadata={() => handleVideoTimeUpdate(manVideoRef, manTimeRef)}
               onEnded={() => setManPlaying(false)}
@@ -109,7 +109,7 @@ export default function ThinkingView() {
         </div>
         <div className="character-figure man-figure">
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/api/media/Man.png" alt="Man" className="custom-character-img" />
+          <img src="/api/media/thinking/Man.png" alt="Man" className="custom-character-img" />
         </div>
         <div className="character-name">How he thinks</div>
       </motion.div>
@@ -127,7 +127,7 @@ export default function ThinkingView() {
               className="thinking-video" 
               playsInline
               preload="metadata"
-              src="/api/media/Woman_Video.mp4"
+              src="/api/media/thinking/Woman_Video.mp4"
               onTimeUpdate={() => handleVideoTimeUpdate(womanVideoRef, womanTimeRef)}
               onLoadedMetadata={() => handleVideoTimeUpdate(womanVideoRef, womanTimeRef)}
               onEnded={() => setWomanPlaying(false)}
@@ -156,7 +156,7 @@ export default function ThinkingView() {
         </div>
         <div className="character-figure woman-figure">
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/api/media/Woman.png" alt="Woman" className="custom-character-img" />
+          <img src="/api/media/thinking/Woman.png" alt="Woman" className="custom-character-img" />
         </div>
         <div className="character-name">How she thinks</div>
       </motion.div>

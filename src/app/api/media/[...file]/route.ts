@@ -98,7 +98,7 @@ export async function GET(_request: NextRequest, { params }: { params: Promise<{
           'Accept-Ranges': 'bytes',
           'Content-Length': chunkSize.toString(),
           'Content-Type': contentType,
-          'Cache-Control': 'private, no-cache, no-store, must-revalidate',
+          'Cache-Control': 'private, max-age=86400, stale-while-revalidate=86400',
         },
       });
     }
@@ -118,7 +118,7 @@ export async function GET(_request: NextRequest, { params }: { params: Promise<{
         'Content-Type': contentType,
         'Content-Length': fileSize.toString(),
         'Accept-Ranges': 'bytes',
-        'Cache-Control': 'private, no-cache, no-store, must-revalidate',
+        'Cache-Control': 'private, max-age=86400, stale-while-revalidate=86400',
       },
     });
   } catch (error) {
